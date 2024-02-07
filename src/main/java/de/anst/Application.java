@@ -22,7 +22,13 @@ import org.springframework.context.annotation.Bean;
 @Theme(value = "jpa", variant = Lumo.DARK)
 public class Application implements AppShellConfigurator {
 
-    public static void main(String[] args) {
+    /**
+	 * the long serialVersionUID
+	 * since 07.02.2024
+	 */
+	private static final long serialVersionUID = 2479169153706781509L;
+
+	public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
