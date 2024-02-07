@@ -1,4 +1,4 @@
-package de.anst.views;
+package de.anst;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -11,8 +11,11 @@ import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+
+import de.anst.person.PersonsCrudView;
+import de.anst.person.PersonsVaadinView;
 import de.anst.views.about.AboutView;
-import de.anst.views.persons.PersonsView;
+
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
@@ -20,7 +23,12 @@ import org.vaadin.lineawesome.LineAwesomeIcon;
  */
 public class MainLayout extends AppLayout {
 
-    private H2 viewTitle;
+    /**
+	 * the long serialVersionUID
+	 * since 07.02.2024
+	 */
+	private static final long serialVersionUID = -1728498194537721292L;
+	private H2 viewTitle;
 
     public MainLayout() {
         setPrimarySection(Section.DRAWER);
@@ -48,16 +56,17 @@ public class MainLayout extends AppLayout {
         addToDrawer(header, scroller, createFooter());
     }
 
-    private SideNav createNavigation() {
+    private static SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-        nav.addItem(new SideNavItem("Persons", PersonsView.class, LineAwesomeIcon.COLUMNS_SOLID.create()));
+        nav.addItem(new SideNavItem("Persons (V)", PersonsVaadinView.class, LineAwesomeIcon.COLUMNS_SOLID.create()));
+        nav.addItem(new SideNavItem("Persons (C)", PersonsCrudView.class, LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
         nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
 
         return nav;
     }
 
-    private Footer createFooter() {
+    private static Footer createFooter() {
         Footer layout = new Footer();
 
         return layout;
