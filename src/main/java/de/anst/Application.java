@@ -1,20 +1,19 @@
 package de.anst;
 
+import javax.sql.DataSource;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.sql.init.SqlDataSourceScriptDatabaseInitializer;
+import org.springframework.boot.autoconfigure.sql.init.SqlInitializationProperties;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 import de.anst.person.PersonRepository;
-import lombok.extern.java.Log;
-
-import javax.sql.DataSource;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.sql.init.SqlDataSourceScriptDatabaseInitializer;
-import org.springframework.boot.autoconfigure.sql.init.SqlInitializationProperties;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
 
 /**
  * The entry point of the Spring Boot application.
@@ -25,7 +24,6 @@ import org.springframework.context.annotation.Bean;
  */
 @SpringBootApplication
 @Theme(value = "jpa", variant = Lumo.DARK)
-@Log
 public class Application implements AppShellConfigurator {
 
 	/**
@@ -33,11 +31,9 @@ public class Application implements AppShellConfigurator {
 	 */
 	private static final long serialVersionUID = 2479169153706781509L;
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
-		for (String ctx : context.getBeanDefinitionNames()) {
-			// log.info(ctx);
-		}
+		SpringApplication.run(Application.class, args);
 
 	}
 

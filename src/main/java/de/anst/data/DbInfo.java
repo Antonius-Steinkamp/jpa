@@ -32,6 +32,11 @@ public class DbInfo implements CommandLineRunner {
 			try (ResultSet catalogs = metaData.getCatalogs()) {
 				printResultSet(catalogs);
 			}
+			
+			try (ResultSet schemas = metaData.getSchemas()) {
+				printResultSet(schemas);
+			}
+			metaData.getSchemas();
 		}
 	}
 
@@ -45,7 +50,7 @@ public class DbInfo implements CommandLineRunner {
 					row.append(",  ");
 				}
 				String columnValue = resultSet.getString(i);
-				row.append(columnValue + " " + rsmd.getColumnName(i));
+				row.append(rsmd.getColumnName(i) + " is '" + columnValue + "'");
 			}
 			log.info(row.toString());
 		}

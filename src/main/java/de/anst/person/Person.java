@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDate;
 
@@ -18,6 +19,7 @@ import de.anst.data.JpaCrudService;
 
 @Entity
 @Table(name = "persons")
+@FieldNameConstants
 public class Person extends AbstractEntity {
 
 	@Getter @Setter
