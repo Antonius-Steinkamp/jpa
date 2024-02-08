@@ -3,10 +3,11 @@ package de.anst.i18n;
 import java.time.LocalDateTime;
 
 import de.anst.data.AbstractEntity;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PreUpdate;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
@@ -15,15 +16,15 @@ import lombok.experimental.FieldNameConstants;
 public class Translation extends AbstractEntity {
 
 	@Getter @Setter
-	@NonNull
+	@NotNull
     private String original;
 
 	@Getter @Setter
-	@NonNull
+	@NotNull
     private String locale;
 
 	@Getter @Setter
-	@NonNull
+	@NotNull
     private String translated;
 
 	@Getter @Setter

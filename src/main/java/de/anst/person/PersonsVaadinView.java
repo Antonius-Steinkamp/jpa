@@ -1,5 +1,10 @@
 package de.anst.person;
 
+import java.util.Optional;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -28,11 +33,6 @@ import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 
 import de.anst.MainLayout;
-import de.anst.data.BaseService;
-
-import java.util.Optional;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
 @PageTitle("Persons (Vaadin)")
 @Route(value = "persons/:samplePersonID?/:action?(edit)", layout = MainLayout.class)
@@ -67,10 +67,10 @@ public class PersonsVaadinView extends Div implements BeforeEnterObserver {
 
     private Person samplePerson;
 
-    private Person.VPersister samplePersonService;
+    private Person.Persister samplePersonService;
 
     public PersonsVaadinView(PersonRepository personRepository) {
-        this.samplePersonService = new Person.VPersister(personRepository);
+        this.samplePersonService = new Person.Persister(personRepository);
         
         addClassNames("persons-view");
 

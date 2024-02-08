@@ -6,6 +6,7 @@ package de.anst.person;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import org.vaadin.crudui.crud.CrudOperation;
 /**
  * CrusPersonView created 07.02.2024 by <a href="mailto:antonius.steinkamp@gmail.com">Antonius</a>
  *
@@ -35,11 +36,13 @@ public class PersonsCrudView extends VerticalLayout {
 
     	String[] declaredPropertyNames = getDeclaredPropertyNames(Person.class);
 
-        crud.setCrudListener(new Person.CPersister(personRepository));
+        crud.setCrudListener(new Person.Persister(personRepository));
         crud.getGrid().setColumns(declaredPropertyNames);
         
         CrudFormFactory<Person> crudFormFactory = crud.getCrudFormFactory();
         crudFormFactory.setVisibleProperties(declaredPropertyNames);
+        crudFormFactory.setUseBeanValidation(CrudOperation.ADD, true);
+        crudFormFactory.setUseBeanValidation(CrudOperation.UPDATE, true);
     	addAndExpand(crud);
     }
 

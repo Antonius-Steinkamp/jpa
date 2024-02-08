@@ -1,21 +1,16 @@
 package de.anst.person;
 
+import java.time.LocalDate;
+
+import de.anst.data.AbstractEntity;
+import de.anst.data.JpaCrudService;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
-
-import java.time.LocalDate;
-
-import org.vaadin.crudui.crud.CrudListener;
-
-import de.anst.data.AbstractEntity;
-import de.anst.data.BaseService;
-import de.anst.data.JpaCrudService;
 
 @Entity
 @Table(name = "persons")
@@ -30,6 +25,7 @@ public class Person extends AbstractEntity {
 
 	@Email
 	@Getter @Setter
+	@NotNull
     private String email;
     
 	@Getter @Setter
@@ -47,18 +43,10 @@ public class Person extends AbstractEntity {
 	@Getter @Setter
     private boolean important;
 
-	public static class VPersister extends BaseService<Person, Long, PersonRepository> {
+	public static class Persister extends JpaCrudService<Person, Long, PersonRepository> {
 
-		public VPersister(PersonRepository repository) {
+		public Persister(PersonRepository repository) {
 			super(repository);
 		}
-	}
-	
-	public static class CPersister extends JpaCrudService<Person, Long> {
-		
-		public CPersister(PersonRepository repository) {
-			super(repository);
-		}
-		
 	}
 }
