@@ -6,6 +6,7 @@ import de.anst.data.AbstractEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PreUpdate;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
@@ -14,12 +15,15 @@ import lombok.experimental.FieldNameConstants;
 public class Translation extends AbstractEntity {
 
 	@Getter @Setter
+	@NonNull
     private String original;
 
 	@Getter @Setter
+	@NonNull
     private String locale;
 
 	@Getter @Setter
+	@NonNull
     private String translated;
 
 	@Getter @Setter

@@ -11,6 +11,8 @@ import java.util.ArrayList;
  *
  */
 import org.vaadin.crudui.crud.impl.GridCrud;
+import org.vaadin.crudui.form.CrudFormFactory;
+import org.vaadin.crudui.layout.CrudLayout;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
@@ -31,9 +33,13 @@ public class PersonsCrudView extends VerticalLayout {
     public PersonsCrudView(PersonRepository personRepository) {
     	super();
 
+    	String[] declaredPropertyNames = getDeclaredPropertyNames(Person.class);
 
         crud.setCrudListener(new Person.CPersister(personRepository));
-        crud.getGrid().setColumns(getDeclaredPropertyNames(Person.class));
+        crud.getGrid().setColumns(declaredPropertyNames);
+        
+        CrudFormFactory<Person> crudFormFactory = crud.getCrudFormFactory();
+        crudFormFactory.setVisibleProperties(declaredPropertyNames);
     	addAndExpand(crud);
     }
 

@@ -46,7 +46,7 @@ public class Translation18NProvider implements I18NProvider {
 
 	@Override
 	public List<Locale> getProvidedLocales() {
-		final List<Locale> result = Collections.unmodifiableList(Arrays.asList(Locale.ENGLISH, Locale.FRENCH, FINNISH));
+		final List<Locale> result = Collections.unmodifiableList(Arrays.asList(Locale.GERMAN, Locale.ENGLISH, Locale.FRENCH, FINNISH));
 		log.info("Locales: " + result);
 		return result;
 	}

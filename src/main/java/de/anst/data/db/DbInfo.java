@@ -1,4 +1,4 @@
-package de.anst.data;
+package de.anst.data.db;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -36,15 +36,25 @@ public class DbInfo implements CommandLineRunner {
 			try (ResultSet schemas = metaData.getSchemas()) {
 				printResultSet(schemas);
 			}
-			metaData.getSchemas();
+
+			try (ResultSet schemas = metaData.getTableTypes()) {
+				printResultSet(schemas);
+			}
+
+			try (ResultSet schemas = metaData.getTables(null, null, "%", null)) {
+				printResultSet(schemas);
+			}
+
+			//metaData.getTables(catalogSeparator, catalogSeparator, catalogSeparator, args)
+			// metaData.getTableTypes()
 		}
 	}
 
 	private static void printResultSet(ResultSet resultSet) throws SQLException {
 		ResultSetMetaData rsmd = resultSet.getMetaData();
 		int columnsNumber = rsmd.getColumnCount();
-		StringBuffer row = new StringBuffer("");
 		while (resultSet.next()) {
+			StringBuffer row = new StringBuffer("");
 			for (int i = 1; i <= columnsNumber; i++) {
 				if (i > 1) {
 					row.append(",  ");
