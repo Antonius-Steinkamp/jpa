@@ -13,6 +13,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import de.anst.i18n.TranslationMasterDetailView;
+import de.anst.material.EinheitView;
+import de.anst.material.MaterialCrudView;
 import de.anst.person.PersonsCrudView;
 import de.anst.person.PersonsVaadinView;
 import de.anst.views.about.AboutView;
@@ -62,6 +64,8 @@ public class MainLayout extends AppLayout {
 
         nav.addItem(new SideNavItem("Persons (V)", PersonsVaadinView.class, LineAwesomeIcon.COLUMNS_SOLID.create()));
         nav.addItem(new SideNavItem("Persons (C)", PersonsCrudView.class, LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
+        nav.addItem(new SideNavItem("Material", MaterialCrudView.class, LineAwesomeIcon.BOOK_SOLID.create()));
+        nav.addItem(new SideNavItem("Einheit", EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
         nav.addItem(new SideNavItem("i18n", TranslationMasterDetailView.class, LineAwesomeIcon.LANGUAGE_SOLID.create()));
         nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
 

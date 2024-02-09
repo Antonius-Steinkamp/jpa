@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import org.springframework.stereotype.Component;
-
 import com.vaadin.flow.i18n.I18NProvider;
 
 import lombok.extern.java.Log;

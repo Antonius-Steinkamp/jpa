@@ -66,10 +66,10 @@ public class TranslationMasterDetailView extends Div implements BeforeEnterObser
 
 	private Translation translation;
 
-	private final TranslationService translationService;
+	private final Translation.Persister translationService;
 
-	public TranslationMasterDetailView(TranslationService translationService) {
-		this.translationService = translationService;
+	public TranslationMasterDetailView(TranslationRepository translationRepository) {
+		this.translationService = new Translation.Persister(translationRepository);
 		addClassNames("master-detail-view");
 
 		// Create UI
@@ -168,7 +168,7 @@ public class TranslationMasterDetailView extends Div implements BeforeEnterObser
 			try {
 				if (this.translation != null) {
 					binder.writeBean(this.translation);
-					translationService.delete(this.translation.getId());
+					translationRepository.deleteById(this.translation.getId());
 					clearForm();
 					refreshGrid();
 					Notification.show("Data deleted");

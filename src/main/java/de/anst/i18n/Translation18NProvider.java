@@ -1,20 +1,17 @@
 package de.anst.i18n;
 
-import java.sql.Timestamp;
 import java.text.MessageFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.vaadin.flow.i18n.I18NProvider;
 
+import de.anst.Utils;
 import lombok.extern.java.Log;
 
 /**
@@ -36,12 +33,12 @@ public class Translation18NProvider implements I18NProvider {
 	 */
 	public static final java.util.Locale FINNISH = new Locale("fi");
 
-	private final JdbcTemplate jdbcTemplate;
-	private final TranslationService translationService;
+	private final Translation.Persister translationService;
+	private final TranslationRepository translationRepository;
 
-	public Translation18NProvider(JdbcTemplate jdbcTemplate, TranslationService translationService) {
-		this.jdbcTemplate = jdbcTemplate;
-		this.translationService = translationService;
+	public Translation18NProvider(final TranslationRepository translationRepository) {
+		this.translationRepository = translationRepository;
+		this.translationService = new Translation.Persister(translationRepository);
 	}
 
 	@Override
@@ -53,15 +50,14 @@ public class Translation18NProvider implements I18NProvider {
 
 	@Override
 	public String getTranslation(String key, Locale locale, Object... params) {
-		String sql = "SELECT id from TRANSLATION WHERE " + Translation.Fields.original + " = '" + key + "' AND "+ Translation.Fields.locale + " = '" + locale.getLanguage() + "'";
-		Long id;
+//		String sql = "SELECT id from TRANSLATION WHERE " + Translation.Fields.original + " = '" + key + "' AND "+ Translation.Fields.locale + " = '" + locale.getLanguage() + "'";
+//		Long id;
 		Translation translation = null;
-		try {
-			id = jdbcTemplate.queryForObject(sql, Long.class);
-			translation = translationService.get(id).get();
-		} catch (EmptyResultDataAccessException ex) {
-			// No such Row
+		List<Translation> trans = translationRepository.findByOriginalAndLocale(key, locale.getLanguage());
+		if (Utils.hasValue(trans)) {
+			translation  = trans.get(0);
 		}
+
 		if (translation != null) {
 			final String result = MessageFormat.format(translation.getTranslated(), params);
 			log.info("Translate '" + key + "/" + locale + "/" + " to '" + result + "'");
@@ -79,7 +75,8 @@ public class Translation18NProvider implements I18NProvider {
 			return result;
 		}
 	}
-	private String untranslated(String key) {
+	
+	private static String untranslated(String key) {
 		return "<" + key + ">";
 	}
 }

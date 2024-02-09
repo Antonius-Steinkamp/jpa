@@ -23,7 +23,7 @@ public abstract class AbstractEntity {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -40,7 +40,7 @@ public abstract class AbstractEntity {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof AbstractEntity that)) {
             return false; // null or not an AbstractEntity class
         }

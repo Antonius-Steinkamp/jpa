@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
-@Component
+// @Component
 @RequiredArgsConstructor
 @Log
 public class DbInfo implements CommandLineRunner {

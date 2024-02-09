@@ -18,6 +18,7 @@ import lombok.experimental.FieldNameConstants;
 public class Person extends AbstractEntity {
 
 	@Getter @Setter
+	@NotNull
     private String firstName;
 	
 	@Getter @Setter
