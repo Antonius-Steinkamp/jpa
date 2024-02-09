@@ -1,5 +1,7 @@
 package de.anst;
 
+import org.vaadin.lineawesome.LineAwesomeIcon;
+
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Footer;
@@ -12,14 +14,13 @@ import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
-import de.anst.i18n.TranslationMasterDetailView;
-import de.anst.material.EinheitView;
-import de.anst.material.MaterialCrudView;
+import de.anst.i18n.TranslationView;
+import de.anst.material.MaterialView;
+import de.anst.material.einheit.EinheitView;
+import de.anst.material.verpackung.VerpackungView;
+import de.anst.pearl.PearlTypeView;
 import de.anst.person.PersonsCrudView;
-import de.anst.person.PersonsVaadinView;
 import de.anst.views.about.AboutView;
-
-import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -62,12 +63,18 @@ public class MainLayout extends AppLayout {
     private static SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-        nav.addItem(new SideNavItem("Persons (V)", PersonsVaadinView.class, LineAwesomeIcon.COLUMNS_SOLID.create()));
-        nav.addItem(new SideNavItem("Persons (C)", PersonsCrudView.class, LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
-        nav.addItem(new SideNavItem("Material", MaterialCrudView.class, LineAwesomeIcon.BOOK_SOLID.create()));
-        nav.addItem(new SideNavItem("Einheit", EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
-        nav.addItem(new SideNavItem("i18n", TranslationMasterDetailView.class, LineAwesomeIcon.LANGUAGE_SOLID.create()));
-        nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
+        nav.addItem(new SideNavItem("Persons", PersonsCrudView.class, LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
+        
+        SideNavItem messagesLink = new SideNavItem("Material", MaterialView.class, LineAwesomeIcon.BOOK_SOLID.create());
+        messagesLink.addItem(new SideNavItem("Einheit", EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
+        messagesLink.addItem(new SideNavItem("Verpackung", VerpackungView.class, LineAwesomeIcon.BOOK_SOLID.create()));
+        messagesLink.setExpanded(false);
+        nav.addItem(messagesLink);
+        nav.addItem(new SideNavItem("PearlType", PearlTypeView.class, LineAwesomeIcon.CAR_ALT_SOLID.create()));
+
+        nav.addItem(new SideNavItem("i18n", TranslationView.class, LineAwesomeIcon.LANGUAGE_SOLID.create()));
+        nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FLUSHED.create()));
+
 
         return nav;
     }

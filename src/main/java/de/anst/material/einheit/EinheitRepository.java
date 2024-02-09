@@ -1,4 +1,4 @@
-package de.anst.material;
+package de.anst.material.einheit;
 
 import java.util.List;
 

@@ -46,6 +46,12 @@ public class Person extends AbstractEntity {
 
 	public static class Persister extends JpaCrudService<Person, Long, PersonRepository> {
 
+		/**
+		 * the long serialVersionUID
+		 * since 09.02.2024
+		 */
+		private static final long serialVersionUID = -9163299082925807553L;
+
 		public Persister(PersonRepository repository) {
 			super(repository);
 		}

@@ -32,14 +32,14 @@ public class ToUppercase18NProvider implements I18NProvider {
 	@Override
 	public List<Locale> getProvidedLocales() {
 		final List<Locale> result = Collections.unmodifiableList(Arrays.asList(Locale.ENGLISH, Locale.FRENCH, FINNISH));
-		log.info("Locales: " + result);
+		// log.info("Locales: " + result);
 		return result;
 	}
 
 	@Override
 	public String getTranslation(String original, Locale locale, Object... params) {
 		final String result = MessageFormat.format(original, params).toUpperCase();
-		log.info("Translate '" + original + "/" + locale + "/" + " parms to '" + result + "'");
+		// log.info("Translate '" + original + "/" + locale + "/" + " parms to '" + result + "'");
 		return result;
 	}
 }

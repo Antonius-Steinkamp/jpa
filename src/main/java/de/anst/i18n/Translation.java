@@ -1,6 +1,7 @@
 package de.anst.i18n;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 import de.anst.data.AbstractEntity;
 import de.anst.data.JpaCrudService;
@@ -57,6 +58,8 @@ public class Translation extends AbstractEntity {
 		 * since 09.02.2024
 		 */
 		private static final long serialVersionUID = -6269605735032634535L;
+
+		public static final Locale[] localeNames = {new Locale("de"), new Locale("en"), new Locale("fi"), new Locale("fr")}; 
 
 		public Persister(TranslationRepository repository) {
 			super(repository);
