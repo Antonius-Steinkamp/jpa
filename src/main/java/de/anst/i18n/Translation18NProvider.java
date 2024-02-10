@@ -13,6 +13,8 @@ import com.vaadin.flow.i18n.I18NProvider;
 
 import de.anst.Utils;
 import de.anst.i18n.Translation.Persister;
+import de.anst.parameter.Parameter;
+import de.anst.parameter.ParameterRepository;
 import lombok.extern.java.Log;
 
 /**
@@ -22,6 +24,7 @@ import lombok.extern.java.Log;
  *
  */
 @Component
+@Log
 public class Translation18NProvider implements I18NProvider {
 
 	/**
@@ -35,10 +38,19 @@ public class Translation18NProvider implements I18NProvider {
 
 	private final Translation.Persister translationService;
 	private final TranslationRepository translationRepository;
+	
+	private String untranslatedPattern = "%s"; 
 
-	public Translation18NProvider(final TranslationRepository translationRepository) {
+	public Translation18NProvider(final TranslationRepository translationRepository, final ParameterRepository pRepo) {
 		this.translationRepository = translationRepository;
 		this.translationService = new Translation.Persister(translationRepository);
+		Parameter.Persister persister = new Parameter.Persister(pRepo);
+
+		log.info(pRepo.count() + " Values in Parameters");
+		List<Parameter> findByName = pRepo.findByName(Parameter.Persister.UNTRANSLATED_PATTERN);
+		if (Utils.hasValue(findByName)) {
+			untranslatedPattern = findByName.get(0).getTextValue();
+		}
 	}
 
 	@Override
@@ -71,7 +83,7 @@ public class Translation18NProvider implements I18NProvider {
 		}
 	}
 	
-	private static String untranslated(String key) {
-		return "<" + key + ">";
+	private String untranslated(String key) {
+		return String.format(untranslatedPattern, key);
 	}
 }

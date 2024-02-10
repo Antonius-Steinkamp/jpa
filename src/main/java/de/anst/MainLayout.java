@@ -14,13 +14,15 @@ import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
+import de.anst.about.AboutView;
 import de.anst.i18n.TranslationView;
 import de.anst.material.MaterialView;
 import de.anst.material.einheit.EinheitView;
 import de.anst.material.verpackung.VerpackungView;
+import de.anst.parameter.ParameterView;
 import de.anst.pearl.PearlTypeView;
 import de.anst.person.PersonsCrudView;
-import de.anst.views.about.AboutView;
+import io.micrometer.observation.transport.Propagator.Getter;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -63,17 +65,18 @@ public class MainLayout extends AppLayout {
     private static SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-        nav.addItem(new SideNavItem("Persons", PersonsCrudView.class, LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("Personen"), PersonsCrudView.class, LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
         
-        SideNavItem messagesLink = new SideNavItem("Material", MaterialView.class, LineAwesomeIcon.BOOK_SOLID.create());
-        messagesLink.addItem(new SideNavItem("Einheit", EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
-        messagesLink.addItem(new SideNavItem("Verpackung", VerpackungView.class, LineAwesomeIcon.BOOK_SOLID.create()));
+        SideNavItem messagesLink = new SideNavItem(nav.getTranslation("Material"), MaterialView.class, LineAwesomeIcon.BOOK_SOLID.create());
+        messagesLink.addItem(new SideNavItem(nav.getTranslation("Einheit"), EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
+        messagesLink.addItem(new SideNavItem(nav.getTranslation("Verpackung"), VerpackungView.class, LineAwesomeIcon.BOOK_SOLID.create()));
         messagesLink.setExpanded(false);
         nav.addItem(messagesLink);
-        nav.addItem(new SideNavItem("PearlType", PearlTypeView.class, LineAwesomeIcon.CAR_ALT_SOLID.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("PearlType"), PearlTypeView.class, LineAwesomeIcon.CAR_ALT_SOLID.create()));
 
-        nav.addItem(new SideNavItem("i18n", TranslationView.class, LineAwesomeIcon.LANGUAGE_SOLID.create()));
-        nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FLUSHED.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("i18n"), TranslationView.class, LineAwesomeIcon.COG_SOLID.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("Parameter"), ParameterView.class, LineAwesomeIcon.COG_SOLID.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("About"), AboutView.class, LineAwesomeIcon.FLUSHED.create()));
 
 
         return nav;

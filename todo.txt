@@ -1,0 +1,12 @@
+TODO:
+ComboBox mit Vorauswahl
+Datumsfelder (Grid und Dialog) Format in Parametern abspeichern
+
+Grid Export (Import?), Liste Drucken, Spalten verschieben + Ein/Ausblenden merken, Filter + Sortieren
+Beanvalidator an (Default machen)
+Declared Property names als Standard anzeigen
+Wenn auf einem ausgewählten Datensatz ein (+) gedrückt wird, dann soll ein neuer Satz mit den ausgewählten Werten vorbesetzt werden.
+i18N für Form und Grid
+Hilfe (Button über der Tabelle, Lokaler Text?, Link nach woanders?)
+Grid: hübscheres Boolean
+Standard bUTTONS MIT iCONS VERSEHEN
