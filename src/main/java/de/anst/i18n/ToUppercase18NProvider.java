@@ -8,8 +8,6 @@ import java.util.Locale;
 
 import com.vaadin.flow.i18n.I18NProvider;
 
-import lombok.extern.java.Log;
-
 /**
  * Simple Implementation for {@link I18NProvider}.
  * 
@@ -17,7 +15,6 @@ import lombok.extern.java.Log;
  *
  */
 // @Component
-@Log
 public class ToUppercase18NProvider implements I18NProvider {
 
 	/**

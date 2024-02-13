@@ -22,7 +22,7 @@ import de.anst.material.verpackung.VerpackungView;
 import de.anst.parameter.ParameterView;
 import de.anst.pearl.type.PearlTypeView;
 import de.anst.person.PersonView;
-import io.micrometer.observation.transport.Propagator.Getter;
+import de.anst.testview.DetailsBasic;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -76,6 +76,7 @@ public class MainLayout extends AppLayout {
 
         nav.addItem(new SideNavItem(nav.getTranslation("i18n"), TranslationView.class, LineAwesomeIcon.COG_SOLID.create()));
         nav.addItem(new SideNavItem(nav.getTranslation("Parameter"), ParameterView.class, LineAwesomeIcon.COG_SOLID.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("Test"), DetailsBasic.class, LineAwesomeIcon.COG_SOLID.create()));
         nav.addItem(new SideNavItem(nav.getTranslation("About"), AboutView.class, LineAwesomeIcon.FLUSHED.create()));
 
 

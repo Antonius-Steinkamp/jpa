@@ -14,7 +14,6 @@ import com.vaadin.flow.i18n.I18NProvider;
 import de.anst.AUtils;
 import de.anst.i18n.Translation.Persister;
 import de.anst.parameter.Parameter;
-import de.anst.parameter.ParameterRepository;
 import lombok.extern.java.Log;
 
 /**
@@ -37,19 +36,16 @@ public class Translation18NProvider implements I18NProvider {
 	public static final java.util.Locale FINNISH = new Locale("fi");
 
 	private final Translation.Persister translationService;
-	private final TranslationRepository translationRepository;
 	
 	private String untranslatedPattern = "%s";
 
-	public Translation18NProvider(final TranslationRepository translationRepository, final ParameterRepository pRepo) {
-		this.translationRepository = translationRepository;
-		this.translationService = new Translation.Persister(translationRepository);
-		Parameter.Persister persister = new Parameter.Persister(pRepo);
+	public Translation18NProvider(final Translation.Persister translationService, final Parameter.Persister persister) {
+		this.translationService = translationService;
 
-		log.info(pRepo.count() + " Values in Parameters");
-		List<Parameter> findByName = pRepo.findByName(Parameter.Persister.UNTRANSLATED_PATTERN);
-		if (AUtils.hasValue(findByName)) {
-			untranslatedPattern = findByName.get(0).getTextValue();
+		log.info(persister.count() + " Values in Parameters");
+		Parameter findByName = persister.findByName(Parameter.Persister.UNTRANSLATED_PATTERN);
+		if (findByName != null) {
+			untranslatedPattern = findByName.getTextValue();
 		}
 	}
 
@@ -62,7 +58,7 @@ public class Translation18NProvider implements I18NProvider {
 	@Override
 	public String getTranslation(String key, Locale locale, Object... params) {
 		Translation translation = null;
-		List<Translation> trans = translationRepository.findByOriginalAndLocale(key, locale.getLanguage());
+		List<Translation> trans = translationService.findByOriginalAndLocale(key, locale.getLanguage());
 		if (AUtils.hasValue(trans)) {
 			translation  = trans.get(0);
 		}

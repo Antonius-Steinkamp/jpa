@@ -52,10 +52,12 @@ public class PearlType  extends AbstractEntity{
 			super(repository);
 			this.repository = repository;
 			if (repository.count() == 0) {
-				PearlType type = new PearlType();
-				type.setName("Cabrio");
-				type.setDescription("Das hübsche Cabrio mit dem Faltdach");
-				repository.save(type);
+				PearlType type;
+				type = new PearlType("Cabrio", "Das Cabrio mit dem Faltdach"); repository.save(type);
+				type = new PearlType("Limousine", "Das elegante Gerät"); repository.save(type);
+				type = new PearlType("Limousine klein", "Das elegante kleine Gerät"); repository.save(type);
+				type = new PearlType("Limousine mittel", "Das elegante mittlere Gerät"); repository.save(type);
+				type = new PearlType("Avant", "Der schicke Kombi"); repository.save(type);
 			}
 		}
 	}

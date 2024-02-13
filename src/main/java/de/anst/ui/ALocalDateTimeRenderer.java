@@ -19,6 +19,8 @@ import de.anst.AUtils;
  */
 public class ALocalDateTimeRenderer<T> extends LocalDateTimeRenderer<T> {
 	
+	private static final long serialVersionUID = ALocalDateTimeRenderer.class.hashCode();
+	
 	static DateTimeFormatter longTermFormatter = AUtils.DATETIME_FORMATTER;
 	static DateTimeFormatter shortTermFormatter = AUtils.TIME_FORMATTER;
 	static String nullRepresentation = "...";

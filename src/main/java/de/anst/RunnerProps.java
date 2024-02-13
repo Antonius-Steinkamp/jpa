@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import lombok.extern.java.Log;
 
@@ -22,12 +21,15 @@ public class RunnerProps  implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		sortedMapOfProperties().forEach((key,value) -> log.info( key + ": " + value));
+	}
+	
+	public static Map<String, String> sortedMapOfProperties() {
 		Properties properties = System.getProperties();
 		Map<String, String> theMap = new HashMap<>();
 		properties.keySet().forEach(key -> theMap.put(key.toString(), properties.get(key).toString()));
 		
-		Map<String, String> env = AUtils.sortByKeys(theMap);
-		env.forEach((key,value) -> log.info( key + ": " + value));
+		return AUtils.sortByKeys(theMap);
 	}
 
 }

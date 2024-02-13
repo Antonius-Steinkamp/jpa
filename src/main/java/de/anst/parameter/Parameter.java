@@ -5,6 +5,8 @@ package de.anst.parameter;
 
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Component;
+
 import de.anst.data.AbstractEntity;
 import de.anst.data.JpaCrudService;
 import jakarta.persistence.Column;
@@ -59,6 +61,7 @@ public class Parameter  extends AbstractEntity{
     }
 
     @Log
+    @Component
 	public static class Persister extends JpaCrudService<Parameter, Long, ParameterRepository> {
 
 		/**

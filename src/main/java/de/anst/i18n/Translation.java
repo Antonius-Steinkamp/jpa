@@ -4,11 +4,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
+import org.springframework.stereotype.Component;
+
 import de.anst.data.AbstractEntity;
 import de.anst.data.JpaCrudService;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Translation extends AbstractEntity {
 
 	@Getter @Setter
 	@NotNull
+    @Column(unique = true)
     private String original;
 
 	@Getter @Setter
@@ -30,7 +32,6 @@ public class Translation extends AbstractEntity {
 
 	@Getter @Setter
 	@NotNull
-    @Column(unique = true)
     private String translated;
 
 
@@ -38,6 +39,7 @@ public class Translation extends AbstractEntity {
     private LocalDateTime rdate; // last read Date
 
   
+	@Component
 	public static class Persister extends JpaCrudService<Translation, Long, TranslationRepository> {
 
 		/**

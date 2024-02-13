@@ -13,3 +13,4 @@ Standard bUTTONS MIT iCONS VERSEHEN
 Default-Button auf <ENTER> auslösen
 Version aus dem jüngsten Datum der class-Dateien ermitteln
 Grid (Alle spalten anzeigen (nicht nur die zu dem aktuellen Typ, auch die technischen
+Uniq in der Form nicht änderbar machen

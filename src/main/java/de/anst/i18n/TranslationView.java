@@ -34,16 +34,13 @@ public class TranslationView extends VerticalLayout {
 	
 	final ExtGridCrud<Translation> crud = new ExtGridCrud<Translation>(Translation.class);
 
-	public TranslationView(TranslationRepository repository) {
+	public TranslationView(Translation.Persister persister) {
 		super();
-
-		var persister = new Translation.Persister(repository);
 
 		crud.setCrudListener(persister);
 		crud.getGrid().getColumnByKey(Translation.Fields.rdate).setRenderer(new ALocalDateTimeRenderer<Translation>(Translation::getRdate));
 
 		crud.getCrudFormFactory().setFieldProvider(Translation.Fields.locale, new LocaleStringProvider());
-		// crud.getCrudFormFactory().setConverter(Translation.Fields.rdate, new LocalDateTimeConverter());
 
 		addAndExpand(crud);
 	}
