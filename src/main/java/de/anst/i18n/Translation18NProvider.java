@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.vaadin.flow.i18n.I18NProvider;
 
-import de.anst.Utils;
+import de.anst.AUtils;
 import de.anst.i18n.Translation.Persister;
 import de.anst.parameter.Parameter;
 import de.anst.parameter.ParameterRepository;
@@ -39,7 +39,7 @@ public class Translation18NProvider implements I18NProvider {
 	private final Translation.Persister translationService;
 	private final TranslationRepository translationRepository;
 	
-	private String untranslatedPattern = "%s"; 
+	private String untranslatedPattern = "%s";
 
 	public Translation18NProvider(final TranslationRepository translationRepository, final ParameterRepository pRepo) {
 		this.translationRepository = translationRepository;
@@ -48,14 +48,14 @@ public class Translation18NProvider implements I18NProvider {
 
 		log.info(pRepo.count() + " Values in Parameters");
 		List<Parameter> findByName = pRepo.findByName(Parameter.Persister.UNTRANSLATED_PATTERN);
-		if (Utils.hasValue(findByName)) {
+		if (AUtils.hasValue(findByName)) {
 			untranslatedPattern = findByName.get(0).getTextValue();
 		}
 	}
 
 	@Override
 	public List<Locale> getProvidedLocales() {
-		final List<Locale> result = Collections.unmodifiableList(Arrays.asList(Persister.localeNames));
+		final List<Locale> result = Collections.unmodifiableList(Arrays.asList(Persister.knownLocales));
 		return result;
 	}
 
@@ -63,7 +63,7 @@ public class Translation18NProvider implements I18NProvider {
 	public String getTranslation(String key, Locale locale, Object... params) {
 		Translation translation = null;
 		List<Translation> trans = translationRepository.findByOriginalAndLocale(key, locale.getLanguage());
-		if (Utils.hasValue(trans)) {
+		if (AUtils.hasValue(trans)) {
 			translation  = trans.get(0);
 		}
 

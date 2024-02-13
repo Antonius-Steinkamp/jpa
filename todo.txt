@@ -10,3 +10,6 @@ i18N für Form und Grid
 Hilfe (Button über der Tabelle, Lokaler Text?, Link nach woanders?)
 Grid: hübscheres Boolean
 Standard bUTTONS MIT iCONS VERSEHEN
+Default-Button auf <ENTER> auslösen
+Version aus dem jüngsten Datum der class-Dateien ermitteln
+Grid (Alle spalten anzeigen (nicht nur die zu dem aktuellen Typ, auch die technischen

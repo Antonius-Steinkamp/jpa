@@ -3,41 +3,94 @@
  */
 package de.anst.i18n;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.vaadin.crudui.form.impl.field.provider.ComboBoxProvider;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.binder.Result;
+import com.vaadin.flow.data.binder.ValueContext;
+import com.vaadin.flow.data.converter.Converter;
+import com.vaadin.flow.data.renderer.LocalDateTimeRenderer;
+import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import de.anst.MainLayout;
+import de.anst.ui.ALocalDateTimeRenderer;
 import de.anst.ui.ExtGridCrud;
+import lombok.extern.java.Log;
 
 @PageTitle("Translation")
 @Route(value = "stranslation", layout = MainLayout.class)
+@Log
 public class TranslationView extends VerticalLayout {
-	/**
-	 * the long serialVersionUID
-	 * since 07.02.2024
-	 */
-	private static final long serialVersionUID = 6199029108682773392L;
-	final ExtGridCrud<Translation> crud = new ExtGridCrud<Translation>(Translation.class);
+
+	private static final long serialVersionUID = TranslationView.class.hashCode();
 	
-    public TranslationView(TranslationRepository repository) {
-    	super();
+	final ExtGridCrud<Translation> crud = new ExtGridCrud<Translation>(Translation.class);
 
-    	var persister = new Translation.Persister(repository);
-    	
-        crud.setCrudListener(persister);
-        
-        var provider = new ComboBoxProvider<>(Arrays.asList(Translation.Persister.localeNames).stream().map(l -> l.getLanguage()).collect(Collectors.toList()));
-        crud.getCrudFormFactory().setFieldProvider(Translation.Fields.locale, provider);
+	public TranslationView(TranslationRepository repository) {
+		super();
 
-    	addAndExpand(crud);
-    }
+		var persister = new Translation.Persister(repository);
 
+		crud.setCrudListener(persister);
+		crud.getGrid().getColumnByKey(Translation.Fields.rdate).setRenderer(new ALocalDateTimeRenderer<Translation>(Translation::getRdate));
+
+		crud.getCrudFormFactory().setFieldProvider(Translation.Fields.locale, new LocaleStringProvider());
+		// crud.getCrudFormFactory().setConverter(Translation.Fields.rdate, new LocalDateTimeConverter());
+
+		addAndExpand(crud);
+	}
+
+	public static class LocaleStringProvider extends ComboBoxProvider<String> {
+		/**
+		 * the long serialVersionUID
+		 * since 11.02.2024
+		 */
+		private static final long serialVersionUID = LocaleStringProvider.class.hashCode();
+
+		public LocaleStringProvider() {
+			super(null, Arrays.asList(Translation.Persister.knownLocales).stream().map(l -> l.getLanguage())
+					.collect(Collectors.toList()), new TextRenderer<String>(), localeString -> {
+						var loc = new Locale(localeString);
+						return loc.toString();
+					});
+
+		}
+	}
+	
+	public static class LocalDateTimeConverter implements Converter<String, LocalDateTime> {
+
+		public LocalDateTimeConverter() {
+			log.info("LocalDateTimeConverter generated");
+		}
+
+		/**
+		 * the long serialVersionUID
+		 * since 11.02.2024
+		 */
+		private static final long serialVersionUID = LocalDateTimeConverter.class.hashCode();
+		
+		private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD hh24.mm.ss");
+		@Override
+		public Result<LocalDateTime> convertToModel(String value, ValueContext context) {
+			return Result.ok(LocalDateTime.parse(value, formatter));
+		}
+
+		@Override
+		public String convertToPresentation(LocalDateTime value, ValueContext context) {
+			if ( value == null) {
+				return "---";
+			}
+			return formatter.format(value);
+		}
+		
+	}
 
 }
-

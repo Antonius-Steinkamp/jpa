@@ -1,28 +1,46 @@
 package de.anst.ui;
 
+import java.util.Arrays;
+
 import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid.MultiSortPriority;
 import com.vaadin.flow.component.icon.VaadinIcon;
 
-import de.anst.Utils;
+import de.anst.AUtils;
 import lombok.extern.java.Log;
 
 @Log
 public class ExtGridCrud<T> extends GridCrud<T>{
 
-	/**
-	 * the long serialVersionUID
-	 * since 09.02.2024
-	 */
-	private static final long serialVersionUID = 37537473558735552L;
+	private static final long serialVersionUID = ExtGridCrud.class.hashCode();
+	
+	private boolean seeAllProperties = true;
+	
+	private String[] declaredPropertyNames = AUtils.getDeclaredPropertyNamesArray(domainType);
+	private String[] allPropertyNames = AUtils.getAllPropertyNamesArray(domainType);
 
+	private void toggleColumns() {
+		if (seeAllProperties) {
+	    	grid.setColumns(declaredPropertyNames);
+		} else {
+	    	grid.setColumns(allPropertyNames);
+		}
+		
+		seeAllProperties = !seeAllProperties;
+	}
+	
 	public ExtGridCrud(Class<T> domainType) {
-		super(domainType);
+		super(domainType, new ExtCrudFormFactory<>(domainType));
 		
     	grid.setColumnReorderingAllowed(true);
-    	String[] declaredPropertyNames = Utils.getDeclaredPropertyNames(domainType);
+    	String[] declaredPropertyNames = AUtils.getDeclaredPropertyNamesArray(domainType);
+//    	log.info("Declared Columns = " + Arrays.asList(declaredPropertyNames));
+//    	log.info("All Columns = " + Arrays.asList(allPropertyNames));
+    
+    	toggleColumns();
+    	
     	grid.setColumns(declaredPropertyNames);
 
     	grid.setMultiSort(true, MultiSortPriority.APPEND);
@@ -43,6 +61,10 @@ public class ExtGridCrud<T> extends GridCrud<T>{
     	var filterButton = new Button(VaadinIcon.FILTER.create(), e -> log.info("Filter will come"));
     	filterButton.getElement().setAttribute("title", "Filter");
         getCrudLayout().addToolbarComponent(filterButton);
+
+    	var keyButton = new Button(VaadinIcon.KEY.create(), e ->  toggleColumns());
+    	keyButton.getElement().setAttribute("title", "All columns");
+        getCrudLayout().addToolbarComponent(keyButton);
 
 
 

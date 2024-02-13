@@ -19,6 +19,12 @@ import com.vaadin.flow.data.renderer.TextRenderer;
 public class ExtComboBoxProvider<T> extends ComboBoxProvider<T> {
 
 	/**
+	 * the long serialVersionUID
+	 * since 10.02.2024
+	 */
+	private static final long serialVersionUID = -3252238200827396118L;
+
+	/**
 	 * @param items
 	 * since 09.02.2024
 	 */

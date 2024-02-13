@@ -1,11 +1,17 @@
 package de.anst.data;
 
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Version;
+import lombok.Getter;
+import lombok.Setter;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
@@ -17,6 +23,7 @@ public abstract class AbstractEntity {
     private Long id;
 
     @Version
+    @Column(nullable = false)
     private int version;
 
     public Long getId() {
@@ -31,6 +38,16 @@ public abstract class AbstractEntity {
         return version;
     }
 
+	@Getter @Setter
+    private LocalDateTime udate = LocalDateTime.now();; // last update Date
+
+	@Getter @Setter
+    private LocalDateTime cdate = LocalDateTime.now();// creation Date
+
+	@PreUpdate
+	private void preupdate() {
+		udate = LocalDateTime.now();
+	}
     @Override
     public int hashCode() {
         if (getId() != null) {

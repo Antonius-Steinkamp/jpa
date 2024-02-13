@@ -5,7 +5,7 @@
 	<groupId>de.anst</groupId>
 	<artifactId>jpa</artifactId>
 	<name>jpa</name>
-	<version>1.0-SNAPSHOT</version>
+	<version>3.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -133,6 +133,14 @@
 
 	<build>
 		<defaultGoal>spring-boot:run</defaultGoal>
+<!--
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+-->
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

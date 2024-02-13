@@ -1,6 +1,7 @@
 package de.anst.i18n;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 
 import de.anst.data.AbstractEntity;
@@ -32,25 +33,11 @@ public class Translation extends AbstractEntity {
     @Column(unique = true)
     private String translated;
 
-	@Getter @Setter
-    private LocalDateTime udate; // last update Date
-
-	@Getter @Setter
-    private LocalDateTime cdate; // creation Date
 
 	@Getter @Setter
     private LocalDateTime rdate; // last read Date
 
-    public Translation() {
-    	cdate = LocalDateTime.now();
-    	udate = cdate;
-    }
-    
-    @PreUpdate
-    public void preUpdateFunction(){
-        udate = LocalDateTime.now();
-    }
-    
+  
 	public static class Persister extends JpaCrudService<Translation, Long, TranslationRepository> {
 
 		/**
@@ -59,12 +46,18 @@ public class Translation extends AbstractEntity {
 		 */
 		private static final long serialVersionUID = -6269605735032634535L;
 
-		public static final Locale[] localeNames = {new Locale("de"), new Locale("en"), new Locale("fi"), new Locale("fr")}; 
+		public static final Locale[] knownLocales = {new Locale("de"), new Locale("en"), new Locale("fi"), new Locale("fr")}; 
 
+		private final TranslationRepository repository;
 		public Persister(TranslationRepository repository) {
 			super(repository);
+			this.repository = repository;
 		}
-	}
+		
+		public List<Translation> findByOriginalAndLocale(String original, String locale) {
+			return repository.findByOriginalAndLocale(original, locale);
+		}
 
+	}
 
 }

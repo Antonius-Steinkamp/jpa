@@ -69,8 +69,11 @@ public class Parameter  extends AbstractEntity{
 		
 		public static final String UNTRANSLATED_PATTERN = "UntranslatedFormat";  
 
+		private final ParameterRepository repository;
+		
 		public Persister(ParameterRepository repository) {
 			super(repository);
+			this.repository = repository;
 			if (repository.count() == 0) {
 				Parameter type = new Parameter();
 				type.setName(UNTRANSLATED_PATTERN);
@@ -80,6 +83,10 @@ public class Parameter  extends AbstractEntity{
 				
 				log.info(repository.count() + " " + this.getClass().getSimpleName() + " saved");
 			}
+		}
+		
+		public Parameter findByName(String name) {
+			return repository.findByName(name).get(0);
 		}
 	}
 

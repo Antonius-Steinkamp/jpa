@@ -1,7 +1,7 @@
 /**
  * PearlTypeView.java created 09.02.2024 by <a href="mailto:antonius.steinkamp@gmail.com">Antonius</a>
  */
-package de.anst.pearl;
+package de.anst.pearl.type;
 
 /**
  * PearlTypeView created 09.02.2024 by <a href="mailto:antonius.steinkamp@gmail.com">Antonius</a>

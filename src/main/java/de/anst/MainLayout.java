@@ -20,8 +20,8 @@ import de.anst.material.MaterialView;
 import de.anst.material.einheit.EinheitView;
 import de.anst.material.verpackung.VerpackungView;
 import de.anst.parameter.ParameterView;
-import de.anst.pearl.PearlTypeView;
-import de.anst.person.PersonsCrudView;
+import de.anst.pearl.type.PearlTypeView;
+import de.anst.person.PersonView;
 import io.micrometer.observation.transport.Propagator.Getter;
 
 /**
@@ -65,7 +65,7 @@ public class MainLayout extends AppLayout {
     private static SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-        nav.addItem(new SideNavItem(nav.getTranslation("Personen"), PersonsCrudView.class, LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("Personen"), PersonView.class, LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
         
         SideNavItem messagesLink = new SideNavItem(nav.getTranslation("Material"), MaterialView.class, LineAwesomeIcon.BOOK_SOLID.create());
         messagesLink.addItem(new SideNavItem(nav.getTranslation("Einheit"), EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
