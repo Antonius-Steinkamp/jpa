@@ -10,6 +10,7 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Version;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,14 +35,14 @@ public abstract class AbstractEntity {
         this.id = id;
     }
 
-    public int getVersion() {
+    protected int getVersion() {
         return version;
     }
 
-	@Getter @Setter
+	@Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PROTECTED)
     private LocalDateTime udate = LocalDateTime.now();; // last update Date
 
-	@Getter @Setter
+	@Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PROTECTED)
     private LocalDateTime cdate = LocalDateTime.now();// creation Date
 
 	@PreUpdate

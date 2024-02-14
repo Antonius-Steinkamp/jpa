@@ -1,20 +1,15 @@
 package de.anst.material.verpackung;
 
-import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Component;
 
 import de.anst.data.AbstractEntity;
 import de.anst.data.JpaCrudService;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
@@ -22,7 +17,7 @@ import lombok.experimental.FieldNameConstants;
 @Table(name = "verpackung")
 @FieldNameConstants
 @NoArgsConstructor
-public class Verpackung extends AbstractEntity {
+public class Verpackung extends AbstractEntity implements Comparable<Verpackung>{
 
 	@Getter @Setter
 	@NotNull
@@ -39,20 +34,14 @@ public class Verpackung extends AbstractEntity {
 	@Getter @Setter
     private Double gewicht = Double.valueOf(0);
 
-	@Getter
-	private LocalDateTime cdate = LocalDateTime.now();
-	
-	@Getter
-	private LocalDateTime udate = LocalDateTime.now();
-
-	@PreUpdate
-	private void preupdate() {
-		udate = LocalDateTime.now();
-	}
-
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	@Override
+	public int compareTo(Verpackung o) {
+		return getName().compareTo(o.name);
 	}
 
 	public Verpackung(String name) {
@@ -78,4 +67,5 @@ public class Verpackung extends AbstractEntity {
 			}
 		}
 	}
+
 }

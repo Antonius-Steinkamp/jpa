@@ -1,9 +1,12 @@
 package de.anst;
 
+import java.text.DecimalFormat;
+
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
@@ -24,10 +27,12 @@ import de.anst.parameter.ParameterView;
 import de.anst.pearl.type.PearlTypeView;
 import de.anst.person.PersonView;
 import de.anst.testview.DetailsBasic;
+import lombok.extern.java.Log;
 
 /**
  * The main view is a top-level placeholder for other views.
  */
+@Log
 public class MainLayout extends AppLayout {
 
     /**
@@ -71,10 +76,12 @@ public class MainLayout extends AppLayout {
         SideNavItem messagesLink = new SideNavItem(nav.getTranslation("Material"), MaterialView.class, LineAwesomeIcon.BOOK_SOLID.create());
         messagesLink.addItem(new SideNavItem(nav.getTranslation("Einheit"), EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
         messagesLink.addItem(new SideNavItem(nav.getTranslation("Verpackung"), VerpackungView.class, LineAwesomeIcon.BOOK_SOLID.create()));
-        messagesLink.addItem(new SideNavItem(nav.getTranslation("StkElement"), StkElementView.class, LineAwesomeIcon.BOOK_SOLID.create()));
         messagesLink.setExpanded(false);
         nav.addItem(messagesLink);
-        nav.addItem(new SideNavItem(nav.getTranslation("PearlType"), PearlTypeView.class, LineAwesomeIcon.CAR_ALT_SOLID.create()));
+
+        messagesLink = new SideNavItem(nav.getTranslation("PearlType"), PearlTypeView.class, LineAwesomeIcon.CAR_ALT_SOLID.create());
+        messagesLink.addItem(new SideNavItem(nav.getTranslation("StkElement"), StkElementView.class, LineAwesomeIcon.BOOK_SOLID.create()));
+        nav.addItem(messagesLink);
 
         nav.addItem(new SideNavItem(nav.getTranslation("i18n"), TranslationView.class, LineAwesomeIcon.COG_SOLID.create()));
         nav.addItem(new SideNavItem(nav.getTranslation("Parameter"), ParameterView.class, LineAwesomeIcon.COG_SOLID.create()));
@@ -87,10 +94,43 @@ public class MainLayout extends AppLayout {
 
     private static Footer createFooter() {
         Footer layout = new Footer();
+        layout.add(createMemoryButton());
 
         return layout;
     }
 
+
+    private static Button createMemoryButton() {
+    	var result =  new Button();
+
+    	new Thread(() -> {
+    		while (true) {
+    			result.getUI().ifPresent(u -> u.access(() -> result.setText(getMemoryInfo())));
+    			
+	    		try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+    		}
+    	}).start();
+    	
+    	return result;
+    }
+
+    
+    private static DecimalFormat format = new DecimalFormat("#,###");
+    private static String getMemoryInfo( ) {
+    	System.gc();
+        long freeMemory = Runtime.getRuntime().freeMemory()/1024;
+        long totalMemory = Runtime.getRuntime().totalMemory()/1024;
+
+        var result =  format.format(freeMemory) + " / " + format.format(totalMemory);
+        // log.info(result);
+        
+        return result;
+    }
+    
     @Override
     protected void afterNavigation() {
         super.afterNavigation();

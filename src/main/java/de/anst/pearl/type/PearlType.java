@@ -35,7 +35,7 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 @AllArgsConstructor
 @NoArgsConstructor
-public class PearlType  extends AbstractEntity{
+public class PearlType  extends AbstractEntity implements Comparable<PearlType>{
 	@Getter @Setter
 	@NotNull
 	@Column(unique = true)
@@ -46,8 +46,16 @@ public class PearlType  extends AbstractEntity{
 
 	@OneToMany(mappedBy = "pearltype", fetch = FetchType.EAGER)
 	@Getter @Setter
-	private Collection<StkElement> stkListe = new ArrayList<>();
-	
+	private Collection<StkElement> stkListe;
+
+	@Override
+	public int compareTo(PearlType o) {
+		if ( o == null) {
+			return 0;
+		}
+		return getName().compareTo(o.getName());
+	}
+
 	@Override
 	public String toString() {
 		return name;
@@ -81,5 +89,6 @@ public class PearlType  extends AbstractEntity{
 			}
 		}
 	}
+
 
 }

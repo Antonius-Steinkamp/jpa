@@ -1,6 +1,9 @@
 package de.anst.material.stkelement;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import org.springframework.stereotype.Component;
 
@@ -26,6 +29,7 @@ import lombok.experimental.FieldNameConstants;
 @Table(name = "stkelement")
 @FieldNameConstants
 @NoArgsConstructor
+@AllArgsConstructor
 public class StkElement extends AbstractEntity {
 
 	@Getter @Setter
@@ -34,6 +38,7 @@ public class StkElement extends AbstractEntity {
 	private Material material;
 	
 	@Getter @Setter
+	@NotNull
 	private Double menge;
 	
 	@Getter @Setter
@@ -46,17 +51,29 @@ public class StkElement extends AbstractEntity {
 		return material.getName() + ":" + menge + " " + material.getEinheit().getName();
 	}
 
+	
 	@Component
 	public static class Persister extends JpaCrudService<StkElement, Long,StkElementRepository> {
 		private static final long serialVersionUID = StkElement.Persister.class.hashCode();
 		
 		private final StkElementRepository repository;
-		public Persister(StkElementRepository repository) {
+		
+		public Persister(StkElementRepository repository, PearlType.Persister pPearlsType, Material.Persister pMaterial) {
 			super(repository);
 			this.repository = repository;
 			
+			final Random random = new Random();
 			if (repository.count() == 0) {
-				// Generate Data (if necessary)
+				var allMaterials = new ArrayList<Material>(pMaterial.findAll());
+				var size = allMaterials.size();
+				
+				for (PearlType pearlType: pPearlsType.findAll()) {
+					int i=1;
+					for (Material material: allMaterials) {
+						var element = new StkElement(material, (double)i++, pearlType );
+						repository.save(element);
+					}
+				}
 			}
 		}
 	}

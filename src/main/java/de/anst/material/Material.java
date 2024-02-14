@@ -29,7 +29,7 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 @AllArgsConstructor
 @NoArgsConstructor
-public class Material extends AbstractEntity {
+public class Material extends AbstractEntity implements Comparable<Material>{
 
 	@Getter @Setter
 	@NotNull
@@ -57,6 +57,15 @@ public class Material extends AbstractEntity {
 	public String toString() {
 		return name;
 	}
+	
+	@Override
+	public int compareTo(Material o) {
+		if ( o == null ) {
+			return 0;
+		}
+		return this.getName().compareTo(o.getName());
+	}
+	
 	
 	public Material(String name, String description, Einheit einheit, Verpackung verpackung) {
 		this.name = name;
@@ -102,4 +111,5 @@ public class Material extends AbstractEntity {
 			return alleVerpackungen.get(random.nextInt(alleVerpackungen.size()));
 		}
 	}
+
 }

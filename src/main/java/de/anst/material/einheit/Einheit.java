@@ -19,7 +19,7 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 @AllArgsConstructor
 @NoArgsConstructor
-public class Einheit extends AbstractEntity {
+public class Einheit extends AbstractEntity implements Comparable<Einheit>{
 
 	@Getter @Setter
 	@NotNull
@@ -32,6 +32,10 @@ public class Einheit extends AbstractEntity {
 	@Override
 	public String toString() {
 		return name;
+	}
+	@Override
+	public int compareTo(Einheit o) {
+		return getName().compareTo(o.getName());
 	}
 
 	@Component
@@ -53,4 +57,5 @@ public class Einheit extends AbstractEntity {
 			}
 		}
 	}
+
 }
