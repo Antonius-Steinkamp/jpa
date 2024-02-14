@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.springframework.stereotype.Component;
+
 import de.anst.data.AbstractEntity;
 import de.anst.data.JpaCrudService;
 import de.anst.material.einheit.Einheit;
@@ -51,6 +53,11 @@ public class Material extends AbstractEntity {
     @NotNull
 	private Verpackung verpackung;
 
+	@Override
+	public String toString() {
+		return name;
+	}
+	
 	public Material(String name, String description, Einheit einheit, Verpackung verpackung) {
 		this.name = name;
 		this.description = description;
@@ -58,40 +65,41 @@ public class Material extends AbstractEntity {
 		this.verpackung = verpackung;
 	}
 	
-	@Getter
-	private LocalDateTime cdate = LocalDateTime.now();
-	
-	@Getter
-	private LocalDateTime udate = LocalDateTime.now();
-
-	@PreUpdate
-	private void preupdate() {
-		udate = LocalDateTime.now();
-	}
-	
+	@Component
 	public static class Persister extends JpaCrudService<Material, Long, MaterialRepository> {
 
-		/**
-		 * the long serialVersionUID
-		 * since 09.02.2024
-		 */
-		private static final long serialVersionUID = 868432046536992979L;
+		private static final long serialVersionUID = Material.Persister.class.hashCode();
 
-		public Persister(MaterialRepository repository, EinheitRepository eRepo, VerpackungRepository vRepo) {
+		private Random random = new Random();
+		private final Einheit.Persister einheitenPersister;
+		private final Verpackung.Persister verpackungsPersister;
+
+		public Persister(MaterialRepository repository, Einheit.Persister einheitenPersister, Verpackung.Persister verpackungsPersister) {
 			super(repository);
-			if (repository.count() == 0) {
-				Random random = new Random();
 
-				var einheitenPersister = new Einheit.Persister(eRepo);
-				var alleEinheiten = new ArrayList<Einheit>( einheitenPersister.findAll());
-				Einheit einheit = alleEinheiten.get(random.nextInt(alleEinheiten.size()));
+				this.einheitenPersister = einheitenPersister;
+				this.verpackungsPersister = verpackungsPersister;
 				
-				var verpackungsPersister = new Verpackung.Persister(vRepo);
-				var alleVerpackungen = new ArrayList<Verpackung>( verpackungsPersister.findAll());
-				Verpackung verpackung = alleVerpackungen.get(random.nextInt(alleVerpackungen.size()));
-				
-				repository.save(new Material("Unterlegscheibe", "Die Unterlegscheibe", einheit, verpackung));
+			if (repository.count() == 0) {
+	
+				repository.save(new Material("Unterlegscheibe", "Die Unterlegscheibe", getRandomEinheit(), getRandomVerpackung()));
+				repository.save(new Material("Schraube M4", "Schraube", getRandomEinheit(), getRandomVerpackung()));
+				repository.save(new Material("Schraube M5", "Schraube", getRandomEinheit(), getRandomVerpackung()));
+				repository.save(new Material("Schraube M6", "Schraube", getRandomEinheit(), getRandomVerpackung()));
+				repository.save(new Material("Schraube M7", "Schraube", getRandomEinheit(), getRandomVerpackung()));
+				repository.save(new Material("Schraube M8", "Schraube", getRandomEinheit(), getRandomVerpackung()));
 			}
+		}
+		
+		private Einheit getRandomEinheit() {
+			var alleEinheiten = new ArrayList<Einheit>( einheitenPersister.findAll());
+			return alleEinheiten.get(random.nextInt(alleEinheiten.size()));
+			
+		}
+		
+		private Verpackung getRandomVerpackung() {
+			var alleVerpackungen = new ArrayList<Verpackung>( verpackungsPersister.findAll());
+			return alleVerpackungen.get(random.nextInt(alleVerpackungen.size()));
 		}
 	}
 }

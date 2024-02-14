@@ -18,6 +18,7 @@ import de.anst.about.AboutView;
 import de.anst.i18n.TranslationView;
 import de.anst.material.MaterialView;
 import de.anst.material.einheit.EinheitView;
+import de.anst.material.stkelement.StkElementView;
 import de.anst.material.verpackung.VerpackungView;
 import de.anst.parameter.ParameterView;
 import de.anst.pearl.type.PearlTypeView;
@@ -70,6 +71,7 @@ public class MainLayout extends AppLayout {
         SideNavItem messagesLink = new SideNavItem(nav.getTranslation("Material"), MaterialView.class, LineAwesomeIcon.BOOK_SOLID.create());
         messagesLink.addItem(new SideNavItem(nav.getTranslation("Einheit"), EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
         messagesLink.addItem(new SideNavItem(nav.getTranslation("Verpackung"), VerpackungView.class, LineAwesomeIcon.BOOK_SOLID.create()));
+        messagesLink.addItem(new SideNavItem(nav.getTranslation("StkElement"), StkElementView.class, LineAwesomeIcon.BOOK_SOLID.create()));
         messagesLink.setExpanded(false);
         nav.addItem(messagesLink);
         nav.addItem(new SideNavItem(nav.getTranslation("PearlType"), PearlTypeView.class, LineAwesomeIcon.CAR_ALT_SOLID.create()));

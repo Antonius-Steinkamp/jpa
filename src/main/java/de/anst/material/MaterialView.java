@@ -35,10 +35,9 @@ public class MaterialView extends VerticalLayout {
 	private static final long serialVersionUID = 6199029108682773392L;
 	final GridCrud<Material> crud = new ExtGridCrud<Material>(Material.class);
 	
-    public MaterialView(MaterialRepository repository, EinheitRepository eRepo, VerpackungRepository vRepo) {
+    public MaterialView(Material.Persister persister, Einheit.Persister eRepo, Verpackung.Persister vRepo) {
     	super();
 
-    	var persister = new Material.Persister(repository, eRepo, vRepo);
         crud.setCrudListener(persister);
         
         var provider = new ExtComboBoxProvider<>(eRepo.findAll(), Einheit::getName);

@@ -3,10 +3,20 @@
  */
 package de.anst.pearl.type;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.stereotype.Component;
+
 import de.anst.data.AbstractEntity;
 import de.anst.data.JpaCrudService;
+import de.anst.material.stkelement.StkElement;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -34,11 +44,21 @@ public class PearlType  extends AbstractEntity{
 	@Getter @Setter
     private String description;
 
+	@OneToMany(mappedBy = "pearltype", fetch = FetchType.EAGER)
+	@Getter @Setter
+	private Collection<StkElement> stkListe = new ArrayList<>();
+	
 	@Override
 	public String toString() {
 		return name;
 	}
 
+	public PearlType(String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
+	
+	@Component
 	public static class Persister extends JpaCrudService<PearlType, Long, PearlTypeRepository> {
 
 		/**
