@@ -42,7 +42,7 @@ public class AUtils {
 	public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 	
 	private static final String TIME_PATTERN = "HH:mm:ss";
-	private static final String DATE_PATTERN = "yyyy.MM.dd";
+	private static final String DATE_PATTERN = "dd.MM.yyyy";
 	
 	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
 	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
@@ -165,6 +165,7 @@ public class AUtils {
     }
     
     public static String timeOfMillisString(long millis) {
+    	DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN + " " + TIME_PATTERN);
     	return DATETIME_FORMATTER.format(LocalDateTimeofMillis(millis));
     }
 }

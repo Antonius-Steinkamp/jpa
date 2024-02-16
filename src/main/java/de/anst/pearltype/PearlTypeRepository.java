@@ -1,13 +1,13 @@
 /**
  * PearlTypeRepository.java created 09.02.2024 by <a href="mailto:antonius.steinkamp@gmail.com">Antonius</a>
  */
-package de.anst.pearl.type;
+package de.anst.pearltype;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+import de.anst.data.SuperRepository;
 
 /**
  * PearlTypeRepository created 09.02.2024 by
@@ -15,7 +15,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  *
  */
 @RepositoryRestResource(path = "pearltype")
-public interface PearlTypeRepository extends JpaRepository<PearlType, Long>, JpaSpecificationExecutor<PearlType> {
+public interface PearlTypeRepository extends SuperRepository<PearlType, Long>{
 	public List<PearlType> findByName(String name);
 
 }

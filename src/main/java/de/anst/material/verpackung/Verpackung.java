@@ -50,17 +50,18 @@ public class Verpackung extends AbstractEntity implements Comparable<Verpackung>
 	
 	@Component
 	public static class Persister extends JpaCrudService<Verpackung, Long, VerpackungRepository> {
-		/**
-		 * the long serialVersionUID
-		 * since 09.02.2024
-		 */
-		private static final long serialVersionUID = 868432046536992979L;
+		
+		private static final long serialVersionUID = Verpackung.Persister.class.hashCode();
 
+		@Getter
+		private Verpackung kiste;
+		
 		public Persister(VerpackungRepository repository) {
 			super(repository);
 			if (repository.count() == 0) {
+				kiste = new Verpackung("Kiste");
 				repository.save(new Verpackung("Karton"));
-				repository.save(new Verpackung("Kiste"));
+				repository.save(kiste);
 				repository.save(new Verpackung("Palette"));
 				repository.save(new Verpackung("Eimer"));
 				repository.save(new Verpackung("Faß"));

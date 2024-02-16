@@ -1,7 +1,7 @@
 /**
  * PearlTypeView.java created 09.02.2024 by <a href="mailto:antonius.steinkamp@gmail.com">Antonius</a>
  */
-package de.anst.pearl.type;
+package de.anst.pearltype;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import com.vaadin.flow.router.Route;
 
 import de.anst.AUtils;
 import de.anst.MainLayout;
-import de.anst.material.stkelement.StkElement;
+import de.anst.pearltype.stkelement.StkElement;
 import de.anst.ui.ExtGridCrud;
 import lombok.extern.java.Log;
 
@@ -41,6 +41,7 @@ public class PearlTypeView extends VerticalLayout {
     	super();
 
         crud.setCrudListener(new PearlType.Persister(repository));
+        crud.getGrid().setColumns(PearlType.Fields.name, PearlType.Fields.description);
 
         crud.getGrid().addSelectionListener(e -> {
         	e.getFirstSelectedItem().ifPresentOrElse(p -> stkListe.setItems(p.getStkListe()), () -> stkListe.setItems(emptyList));

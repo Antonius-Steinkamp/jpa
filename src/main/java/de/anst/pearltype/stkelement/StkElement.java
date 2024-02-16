@@ -1,4 +1,4 @@
-package de.anst.material.stkelement;
+package de.anst.pearltype.stkelement;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import de.anst.data.AbstractEntity;
 import de.anst.data.JpaCrudService;
 import de.anst.material.Material;
-import de.anst.pearl.type.PearlType;
+import de.anst.pearltype.PearlType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

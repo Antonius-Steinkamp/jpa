@@ -1,7 +1,7 @@
 /**
  * PearlType.java created 09.02.2024 by <a href="mailto:antonius.steinkamp@gmail.com">Antonius</a>
  */
-package de.anst.pearl.type;
+package de.anst.pearltype;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import de.anst.data.AbstractEntity;
 import de.anst.data.JpaCrudService;
-import de.anst.material.stkelement.StkElement;
+import de.anst.pearltype.stkelement.StkElement;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

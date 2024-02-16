@@ -2,8 +2,10 @@ package de.anst;
 
 import java.text.DecimalFormat;
 
+import org.vaadin.crudui.layout.impl.VerticalCrudLayout;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -11,7 +13,9 @@ import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Header;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.Scroller;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
@@ -21,11 +25,12 @@ import de.anst.about.AboutView;
 import de.anst.i18n.TranslationView;
 import de.anst.material.MaterialView;
 import de.anst.material.einheit.EinheitView;
-import de.anst.material.stkelement.StkElementView;
 import de.anst.material.verpackung.VerpackungView;
 import de.anst.parameter.ParameterView;
-import de.anst.pearl.type.PearlTypeView;
+import de.anst.pearltype.PearlTypeView;
+import de.anst.pearltype.stkelement.StkElementView;
 import de.anst.person.PersonView;
+import de.anst.segment.SegmentView;
 import de.anst.testview.DetailsBasic;
 import lombok.extern.java.Log;
 
@@ -88,12 +93,14 @@ public class MainLayout extends AppLayout {
         nav.addItem(new SideNavItem(nav.getTranslation("Test"), DetailsBasic.class, LineAwesomeIcon.COG_SOLID.create()));
         nav.addItem(new SideNavItem(nav.getTranslation("About"), AboutView.class, LineAwesomeIcon.FLUSHED.create()));
 
+        nav.addItem(new SideNavItem(nav.getTranslation("Abschnitte"), SegmentView.class, LineAwesomeIcon.FLUSHED.create()));
 
         return nav;
     }
 
     private static Footer createFooter() {
         Footer layout = new Footer();
+
         layout.add(createMemoryButton());
 
         return layout;
@@ -101,21 +108,10 @@ public class MainLayout extends AppLayout {
 
 
     private static Button createMemoryButton() {
-    	var result =  new Button();
-
-    	new Thread(() -> {
-    		while (true) {
-    			result.getUI().ifPresent(u -> u.access(() -> result.setText(getMemoryInfo())));
-    			
-	    		try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-    		}
-    	}).start();
-    	
-    	return result;
+    	return  new Button(getMemoryInfo(), e -> {
+    		e.getSource().setText(getMemoryInfo());
+    		UI.getCurrent().getPage().fetchCurrentURL(url -> log.info(url.toString()));
+    	});
     }
 
     

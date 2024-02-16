@@ -55,7 +55,7 @@ public class Material extends AbstractEntity implements Comparable<Material>{
 
 	@Override
 	public String toString() {
-		return name;
+		return name + " / " + einheit.getName();
 	}
 	
 	@Override
@@ -91,12 +91,12 @@ public class Material extends AbstractEntity implements Comparable<Material>{
 				
 			if (repository.count() == 0) {
 	
-				repository.save(new Material("Unterlegscheibe", "Die Unterlegscheibe", getRandomEinheit(), getRandomVerpackung()));
-				repository.save(new Material("Schraube M4", "Schraube", getRandomEinheit(), getRandomVerpackung()));
-				repository.save(new Material("Schraube M5", "Schraube", getRandomEinheit(), getRandomVerpackung()));
-				repository.save(new Material("Schraube M6", "Schraube", getRandomEinheit(), getRandomVerpackung()));
-				repository.save(new Material("Schraube M7", "Schraube", getRandomEinheit(), getRandomVerpackung()));
-				repository.save(new Material("Schraube M8", "Schraube", getRandomEinheit(), getRandomVerpackung()));
+				repository.save(new Material("Unterlegscheibe", "Die Unterlegscheibe", getEinheit("stk"), getRandomVerpackung()));
+				repository.save(new Material("Schraube M4", "Schraube", getEinheit("stk"), getRandomVerpackung()));
+				repository.save(new Material("Schraube M5", "Schraube", getEinheit("stk"), getRandomVerpackung()));
+				repository.save(new Material("Schraube M6", "Schraube", getEinheit("stk"), getRandomVerpackung()));
+				repository.save(new Material("Schraube M7", "Schraube", getEinheit("stk"), getRandomVerpackung()));
+				repository.save(new Material("Schraube M8", "Schraube", getEinheit("stk"), getRandomVerpackung()));
 			}
 		}
 		
@@ -105,7 +105,11 @@ public class Material extends AbstractEntity implements Comparable<Material>{
 			return alleEinheiten.get(random.nextInt(alleEinheiten.size()));
 			
 		}
-		
+
+		private Einheit getEinheit(String name) {
+			return new ArrayList<Einheit>( einheitenPersister.findAll()).stream().filter(entity -> name.equals(entity.getName())).findFirst().get();
+		}
+
 		private Verpackung getRandomVerpackung() {
 			var alleVerpackungen = new ArrayList<Verpackung>( verpackungsPersister.findAll());
 			return alleVerpackungen.get(random.nextInt(alleVerpackungen.size()));

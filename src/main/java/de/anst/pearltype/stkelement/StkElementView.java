@@ -1,7 +1,7 @@
 /**
  * CrusPersonView.java created 07.02.2024 by <a href="mailto:antonius.steinkamp@gmail.com">Antonius</a>
  */
-package de.anst.material.stkelement;
+package de.anst.pearltype.stkelement;
 
 /**
  * CrusPersonView created 07.02.2024 by <a href="mailto:antonius.steinkamp@gmail.com">Antonius</a>
@@ -18,7 +18,7 @@ import com.vaadin.flow.router.Route;
 import de.anst.MainLayout;
 import de.anst.material.Material;
 import de.anst.material.verpackung.Verpackung;
-import de.anst.pearl.type.PearlType;
+import de.anst.pearltype.PearlType;
 import de.anst.ui.ExtComboBoxProvider;
 import de.anst.ui.ExtGridCrud;
 
