@@ -33,8 +33,8 @@ public class PearlTypeView extends VerticalLayout {
 	private static final long serialVersionUID = PearlTypeView.class.hashCode();
 
 	final GridCrud<PearlType> crud = new ExtGridCrud<PearlType>(PearlType.class);
-	final Grid<StkElement> stkListe = new Grid<StkElement>(StkElement.class);
-	
+
+	final Grid<StkElement> childListe = new Grid<StkElement>(StkElement.class);
 	private static List<StkElement> emptyList = new ArrayList<StkElement>();
 	
     public PearlTypeView(PearlTypeRepository repository) {
@@ -44,11 +44,15 @@ public class PearlTypeView extends VerticalLayout {
         crud.getGrid().setColumns(PearlType.Fields.name, PearlType.Fields.description);
 
         crud.getGrid().addSelectionListener(e -> {
-        	e.getFirstSelectedItem().ifPresentOrElse(p -> stkListe.setItems(p.getStkListe()), () -> stkListe.setItems(emptyList));
+        	e.getFirstSelectedItem().ifPresentOrElse(p -> childListe.setItems(p.getStkListe()), () -> childListe.setItems(emptyList));
         });
-        stkListe.setColumns(AUtils.getDeclaredPropertyNamesArray(StkElement.class));
+        childListe.setColumns(AUtils.getDeclaredPropertyNamesArray(StkElement.class));
 
-        var sLayout = new SplitLayout(crud, stkListe);
+        var childLayout = new VerticalLayout();
+        childLayout.add(StkElement.class.getSimpleName());
+        childLayout.add(childListe);
+        
+        var sLayout = new SplitLayout(crud, childLayout);
     	sLayout.setOrientation(Orientation.VERTICAL);
         sLayout.setSizeFull();
         

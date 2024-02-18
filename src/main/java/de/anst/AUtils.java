@@ -6,8 +6,6 @@ package de.anst;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -25,10 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.hibernate.validator.internal.util.privilegedactions.GetDeclaredFields;
 import org.springframework.core.io.ClassPathResource;
-
-import com.vaadin.flow.component.grid.Grid;
 
 import lombok.extern.java.Log;
 
@@ -168,4 +163,5 @@ public class AUtils {
     	DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN + " " + TIME_PATTERN);
     	return DATETIME_FORMATTER.format(LocalDateTimeofMillis(millis));
     }
+    
 }

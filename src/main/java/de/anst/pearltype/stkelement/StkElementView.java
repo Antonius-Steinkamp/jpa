@@ -37,7 +37,6 @@ public class StkElementView extends VerticalLayout {
 
         var vProvider = new ComboBoxProvider<>(StkElement.Fields.material, mPersister.findAll(), new TextRenderer<>(Material::getName), Material::getName);
         crud.getCrudFormFactory().setFieldProvider(StkElement.Fields.material, vProvider);
-
         crud.getCrudFormFactory().setFieldProvider(StkElement.Fields.pearltype, new ExtComboBoxProvider<PearlType>(pPersister.findAll(), PearlType::getName));
 
 

@@ -1,19 +1,8 @@
 package de.anst.about;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.security.CodeSource;
-
 import org.springframework.boot.SpringBootVersion;
 import org.vaadin.crudui.crud.impl.GridCrud;
 
-import com.jayway.jsonpath.InvalidPathException;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
@@ -24,7 +13,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 
-import de.anst.AUtils;
 import de.anst.MainLayout;
 import lombok.extern.java.Log;
 
@@ -40,25 +28,14 @@ public class AboutView extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
 	public AboutView() {
+		super();
+		log.info(AboutView.class.getName() + " ctor");
 		setSpacing(false);
 		setPadding(false);
 
 		H2 header = new H2("Moin");
 		header.addClassNames(Margin.Top.XLARGE, Margin.Bottom.MEDIUM);
 		add(header);
-		/*
-		long maxLastModified = Long.MIN_VALUE;
-		for (var clazz : AUtils.getClassesInPackage("de.anst")) {
-			 CodeSource codeSource = clazz.getProtectionDomain().getCodeSource(); if
-			 (codeSource != null) { URL location = codeSource.getLocation(); File file =
-			 new File(location.getFile() + clazz.getName().replace('.', '/') + ".class");
-			 long lastModified = file.lastModified(); log.info(clazz.getName() + "(" +
-			 file.getAbsolutePath() + ") " + AUtils.timeOfMillisString(maxLastModified) +
-			 " (" + lastModified + ")"); if (lastModified > maxLastModified) {
-			 maxLastModified = lastModified; } }
-			 
-		}
-	*/
 
 		// add(DetailsBasic.createDetails());
 
@@ -69,15 +46,15 @@ public class AboutView extends VerticalLayout {
 		add(createHtml("Demo von <a href=\"http://antonius.hopto.org\" target=\"_blank\">Antonius</a>"));
 //		add(createHtml("Demo vom " + AUtils.timeOfMillisString(maxLastModified)	+ " von <a href=\"http://antonius.hopto.org\" target=\"_blank\">Antonius</a>"));
 		add(new Paragraph("mit"));
-		add(createHtml("Java Version " + System.getProperty("java.version") + " " + System.getProperty("java.vm.name")
-				+ " " + System.getProperty("java.vm.version") + " " + System.getProperty("java.vm.vendor")));
 		add(createHtml("Vaadin " + com.vaadin.flow.component.Component.class.getPackage().getImplementationVersion()));
 		add(createHtml("Crud Version " + GridCrud.class.getPackage().getImplementationVersion()));
 		add(createHtml("Spring Boot Version " + SpringBootVersion.getVersion()));
+		add(createHtml("Java Version " + System.getProperty("java.version") + " " + System.getProperty("java.vm.name")
+		+ " " + System.getProperty("java.vm.version") + " " + System.getProperty("java.vm.vendor")));
 		add(createHtml("OS " + System.getProperty("os.name") + " " + System.getProperty("os.version") + " "
 				+ System.getProperty("os.arch") + " " + Runtime.getRuntime().maxMemory() / (1024 * 1024)
 				+ " MB Memory"));
-
+		
 		setSizeFull();
 		setJustifyContentMode(JustifyContentMode.CENTER);
 		setDefaultHorizontalComponentAlignment(Alignment.CENTER);

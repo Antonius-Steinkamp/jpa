@@ -2,26 +2,27 @@ package de.anst;
 
 import java.text.DecimalFormat;
 
-import org.vaadin.crudui.layout.impl.VerticalCrudLayout;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Header;
-import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import de.anst.about.AboutView;
+import de.anst.about.EnvView;
 import de.anst.i18n.TranslationView;
 import de.anst.material.MaterialView;
 import de.anst.material.einheit.EinheitView;
@@ -31,6 +32,9 @@ import de.anst.pearltype.PearlTypeView;
 import de.anst.pearltype.stkelement.StkElementView;
 import de.anst.person.PersonView;
 import de.anst.segment.SegmentView;
+import de.anst.segment.bdo.Verbauort;
+import de.anst.segment.bdo.VerbauortView;
+import de.anst.segment.meldepunkt.MeldepunktView;
 import de.anst.testview.DetailsBasic;
 import lombok.extern.java.Log;
 
@@ -78,6 +82,12 @@ public class MainLayout extends AppLayout {
 
         nav.addItem(new SideNavItem(nav.getTranslation("Personen"), PersonView.class, LineAwesomeIcon.PEOPLE_CARRY_SOLID.create()));
         
+        nav.addItem(new SideNavItem(nav.getTranslation("i18n"), TranslationView.class, LineAwesomeIcon.COG_SOLID.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("Parameter"), ParameterView.class, LineAwesomeIcon.COG_SOLID.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("Umgebung"), EnvView.class, LineAwesomeIcon.FLUSHED.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("Test"), DetailsBasic.class, LineAwesomeIcon.COG_SOLID.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("About"), AboutView.class, LineAwesomeIcon.FLUSHED.create()));
+
         SideNavItem messagesLink = new SideNavItem(nav.getTranslation("Material"), MaterialView.class, LineAwesomeIcon.BOOK_SOLID.create());
         messagesLink.addItem(new SideNavItem(nav.getTranslation("Einheit"), EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
         messagesLink.addItem(new SideNavItem(nav.getTranslation("Verpackung"), VerpackungView.class, LineAwesomeIcon.BOOK_SOLID.create()));
@@ -88,24 +98,39 @@ public class MainLayout extends AppLayout {
         messagesLink.addItem(new SideNavItem(nav.getTranslation("StkElement"), StkElementView.class, LineAwesomeIcon.BOOK_SOLID.create()));
         nav.addItem(messagesLink);
 
-        nav.addItem(new SideNavItem(nav.getTranslation("i18n"), TranslationView.class, LineAwesomeIcon.COG_SOLID.create()));
-        nav.addItem(new SideNavItem(nav.getTranslation("Parameter"), ParameterView.class, LineAwesomeIcon.COG_SOLID.create()));
-        nav.addItem(new SideNavItem(nav.getTranslation("Test"), DetailsBasic.class, LineAwesomeIcon.COG_SOLID.create()));
-        nav.addItem(new SideNavItem(nav.getTranslation("About"), AboutView.class, LineAwesomeIcon.FLUSHED.create()));
 
-        nav.addItem(new SideNavItem(nav.getTranslation("Abschnitte"), SegmentView.class, LineAwesomeIcon.FLUSHED.create()));
+        messagesLink = new SideNavItem(nav.getTranslation("Segmente"), SegmentView.class, LineAwesomeIcon.FLUSHED.create());
+        messagesLink.addItem(new SideNavItem(nav.getTranslation("Meldepunkte"), MeldepunktView.class, LineAwesomeIcon.FLUSHED.create()));
+        messagesLink.addItem(new SideNavItem(nav.getTranslation("Verbauorte"), VerbauortView.class, LineAwesomeIcon.FLUSHED.create()));
+        nav.addItem(messagesLink);
+        
 
         return nav;
     }
 
-    private static Footer createFooter() {
-        Footer layout = new Footer();
+    private Footer createFooter() {
+        Footer footerLayout = new Footer();
+        var layout = new VerticalLayout();
+        layout.add(createMemoryButton(), createThemeToggle());
+        footerLayout.add(layout);
 
-        layout.add(createMemoryButton());
-
-        return layout;
+        return footerLayout;
     }
 
+    public Checkbox createThemeToggle() {
+		var themeToggle = new Checkbox("Dark theme");
+		themeToggle.addValueChangeListener(e -> {
+			setTheme(e.getValue());
+		});
+		
+		return themeToggle;
+
+    }
+    private void setTheme(boolean dark) {
+		var js = "document.documentElement.setAttribute('theme', $0)";
+
+		getElement().executeJs(js, dark ? Lumo.DARK : Lumo.LIGHT);
+	}
 
     private static Button createMemoryButton() {
     	return  new Button(getMemoryInfo(), e -> {

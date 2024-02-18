@@ -1,11 +1,17 @@
 package de.anst.segment;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import de.anst.data.AbstractEntity;
 import de.anst.data.JpaCrudService;
+import de.anst.segment.meldepunkt.Meldepunkt;
+import de.anst.ui.ExtComboBoxProvider;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -33,6 +39,11 @@ public class Segment extends AbstractEntity implements Comparable<Segment>{
 	@Getter @Setter
 	private Long taktZeit;
 	
+	
+	@Getter @Setter
+	@OneToMany(mappedBy = "segment", fetch = FetchType.EAGER)
+	private List<Meldepunkt> meldepunkte;
+	
 	@Override
 	public String toString() {
 		return name;
@@ -51,13 +62,33 @@ public class Segment extends AbstractEntity implements Comparable<Segment>{
 		 */
 		private static final long serialVersionUID = 868432046536992979L;
 		
+		private static final String KEIN_SEGMENT = "Kein Segment";
+		
+		@Getter
+		private Segment keinSegment;
+
+		private static final String DEMO_SEGMENT = "Demo";
+		
+		@Getter
+		private Segment demoSegment;
+		
+		@Getter
+		private final ExtComboBoxProvider<Segment> provider;
+		
 		public Persister(SegmentRepository repository) {
 			super(repository);
 			log.info("**** " + this.getClass().getName() );
 			if (repository.count() == 0) {
-				repository.save(new Segment("mitte", "Der mittlere Abschnitt", 140l));
+				repository.save(new Segment(KEIN_SEGMENT, "Wenn mal kein Segment benötigt wird", 0l, null));
+				repository.save(new Segment(DEMO_SEGMENT, "Das Segment für die Demo", 140l, null));
+				repository.save(new Segment("mitte", "Der mittlere Abschnitt", 140l, null));
 			}
-			log.info(this.getClass().getName() + " has " + repository.count() + " entries");
+			
+			keinSegment = repository.findByName(KEIN_SEGMENT).get(0);
+			demoSegment = repository.findByName(DEMO_SEGMENT).get(0);
+			provider = new ExtComboBoxProvider<Segment>(repository.findAll(), Segment::getName);
+
+			log.info(this.getClass().getName() + " has " + repository.count() + " entries, keinSegment is " + keinSegment);
 			
 		}
 		

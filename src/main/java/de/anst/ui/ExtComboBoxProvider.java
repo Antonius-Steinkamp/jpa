@@ -12,10 +12,13 @@ import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.TextRenderer;
 
+import lombok.extern.java.Log;
+
 /**
  * ExtComboBoxProvider created 09.02.2024 by <a href="mailto:antonius.steinkamp@gmail.com">Antonius</a>
  *
  */
+@Log
 public class ExtComboBoxProvider<T> extends ComboBoxProvider<T> {
 
 	/**
@@ -30,10 +33,12 @@ public class ExtComboBoxProvider<T> extends ComboBoxProvider<T> {
 	 */
 	public ExtComboBoxProvider(Collection<T> items) {
 		super(items);
+		log.info(this.getClass().getSimpleName()+ " ctor");
 	}
 
 	public ExtComboBoxProvider(Collection<T> items, ItemLabelGenerator<T> itemLabelGenerator) {
 		super(null, items, new TextRenderer<T>(), itemLabelGenerator);
+		log.info(this.getClass().getSimpleName()+ " ctor with labelGenerator");
 	}
 
 	public ExtComboBoxProvider(String caption, Collection<T> items, ItemLabelGenerator<T> itemLabelGenerator) {

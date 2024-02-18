@@ -62,32 +62,4 @@ public class TranslationView extends VerticalLayout {
 		}
 	}
 	
-	public static class LocalDateTimeConverter implements Converter<String, LocalDateTime> {
-
-		public LocalDateTimeConverter() {
-			log.info("LocalDateTimeConverter generated");
-		}
-
-		/**
-		 * the long serialVersionUID
-		 * since 11.02.2024
-		 */
-		private static final long serialVersionUID = LocalDateTimeConverter.class.hashCode();
-		
-		private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYY-MM-DD hh24.mm.ss");
-		@Override
-		public Result<LocalDateTime> convertToModel(String value, ValueContext context) {
-			return Result.ok(LocalDateTime.parse(value, formatter));
-		}
-
-		@Override
-		public String convertToPresentation(LocalDateTime value, ValueContext context) {
-			if ( value == null) {
-				return "---";
-			}
-			return formatter.format(value);
-		}
-		
-	}
-
 }
