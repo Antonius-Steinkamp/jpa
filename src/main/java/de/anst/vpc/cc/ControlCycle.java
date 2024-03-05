@@ -99,7 +99,7 @@ public class ControlCycle extends AbstractEntity implements Comparable<ControlCy
 		private final Material.Persister mPersister;
 		private final Verbauort.Persister bdoPersister;
 		
-		public Persister(ControlCycleRepository repository, Material.Persister mPersister, Verbauort.Persister bdoPersister) {
+		public Persister(ControlCycleRepository repository, Material.Persister mPersister, Verbauort.Persister bdoPersister, Verpackung.Persister vpPersister) {
 			super(repository);
 			this.repository = repository;
 			this.mPersister = mPersister;

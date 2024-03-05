@@ -128,7 +128,7 @@ public class Meldepunkt extends AbstractEntity implements Comparable<Meldepunkt>
 			return new ExtComboBoxProvider<>(findAll(), Meldepunkt::getLabel);
 		}
 
-		public Persister(MeldepunktRepository repository) {
+		public Persister(MeldepunktRepository repository, Segment.Persister sPersister) {
 			super(repository);
 			log.info("**** " + this.getClass().getName());
 			if (repository.count() == 0) {

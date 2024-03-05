@@ -25,7 +25,7 @@ public class MeldepunktView extends VerticalLayout {
     public MeldepunktView(MeldepunktRepository repository, Segment.Persister sPersister) {
     	super();
 
-        crud.setCrudListener(new Meldepunkt.Persister(repository));
+        crud.setCrudListener(new Meldepunkt.Persister(repository, sPersister));
 
         /*
         var vProvider = new ComboBoxProvider<>(StkElement.Fields.material, mPersister.findAll(), new TextRenderer<>(Material::getName), Material::getName);

@@ -28,7 +28,7 @@ public class ControlCycleView extends VerticalLayout {
     public ControlCycleView(ControlCycleRepository repository, Material.Persister mPersister, Verbauort.Persister bdoPersister,Verpackung.Persister vP) {
     	super();
 
-        crud.setCrudListener(new ControlCycle.Persister(repository, mPersister, bdoPersister));
+        crud.setCrudListener(new ControlCycle.Persister(repository, mPersister, bdoPersister, vP));
 
         crud.getCrudFormFactory().setVisibleProperties(
         		ControlCycle.Fields.material,

@@ -79,7 +79,7 @@ public class Material extends AbstractEntity implements Comparable<Material>{
 
 		private final MaterialRepository repository;
 
-		public Persister(MaterialRepository repository) {
+		public Persister(MaterialRepository repository, Einheit.Persister ePersister) {
 			super(repository);
 
 			this.repository = repository;
