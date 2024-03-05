@@ -1,20 +1,15 @@
 package de.anst;
 
-import java.text.DecimalFormat;
-
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.orderedlayout.Scroller;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
@@ -24,24 +19,25 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import de.anst.about.AboutView;
 import de.anst.about.EnvView;
 import de.anst.i18n.TranslationView;
-import de.anst.material.MaterialView;
-import de.anst.material.einheit.EinheitView;
-import de.anst.material.verpackung.VerpackungView;
 import de.anst.parameter.ParameterView;
-import de.anst.pearltype.PearlTypeView;
-import de.anst.pearltype.stkelement.StkElementView;
 import de.anst.person.PersonView;
-import de.anst.segment.SegmentView;
-import de.anst.segment.bdo.Verbauort;
-import de.anst.segment.bdo.VerbauortView;
-import de.anst.segment.meldepunkt.MeldepunktView;
-import de.anst.testview.DetailsBasic;
-import lombok.extern.java.Log;
+import de.anst.test.view.DetailsBasic;
+import de.anst.vpc.cc.ControlCycleView;
+import de.anst.vpc.material.MaterialView;
+import de.anst.vpc.material.einheit.EinheitView;
+import de.anst.vpc.material.verpackung.VerpackungView;
+import de.anst.vpc.pearl.PearlView;
+import de.anst.vpc.pearl.stk.StkView;
+import de.anst.vpc.pearltype.PearlTypeView;
+import de.anst.vpc.pearltype.stkelement.StkElementView;
+import de.anst.vpc.segment.SegmentView;
+import de.anst.vpc.segment.bdo.VerbauortView;
+import de.anst.vpc.segment.meldepunkt.MeldepunktView;
 
 /**
  * The main view is a top-level placeholder for other views.
  */
-@Log
+// @Log
 public class MainLayout extends AppLayout {
 
     /**
@@ -87,6 +83,9 @@ public class MainLayout extends AppLayout {
         nav.addItem(new SideNavItem(nav.getTranslation("Umgebung"), EnvView.class, LineAwesomeIcon.FLUSHED.create()));
         nav.addItem(new SideNavItem(nav.getTranslation("Test"), DetailsBasic.class, LineAwesomeIcon.COG_SOLID.create()));
         nav.addItem(new SideNavItem(nav.getTranslation("About"), AboutView.class, LineAwesomeIcon.FLUSHED.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("ControlCycle"), ControlCycleView.class, LineAwesomeIcon.FLUSHED.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("Perlen"), PearlView.class, LineAwesomeIcon.FLUSHED.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("Verbau"), StkView.class, LineAwesomeIcon.FLUSHED.create()));
 
         SideNavItem messagesLink = new SideNavItem(nav.getTranslation("Material"), MaterialView.class, LineAwesomeIcon.BOOK_SOLID.create());
         messagesLink.addItem(new SideNavItem(nav.getTranslation("Einheit"), EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
@@ -109,12 +108,7 @@ public class MainLayout extends AppLayout {
     }
 
     private Footer createFooter() {
-        Footer footerLayout = new Footer();
-        var layout = new VerticalLayout();
-        layout.add(createMemoryButton(), createThemeToggle());
-        footerLayout.add(layout);
-
-        return footerLayout;
+        return new Footer(createThemeToggle());
     }
 
     public Checkbox createThemeToggle() {
@@ -126,31 +120,13 @@ public class MainLayout extends AppLayout {
 		return themeToggle;
 
     }
+    
     private void setTheme(boolean dark) {
 		var js = "document.documentElement.setAttribute('theme', $0)";
 
 		getElement().executeJs(js, dark ? Lumo.DARK : Lumo.LIGHT);
 	}
 
-    private static Button createMemoryButton() {
-    	return  new Button(getMemoryInfo(), e -> {
-    		e.getSource().setText(getMemoryInfo());
-    		UI.getCurrent().getPage().fetchCurrentURL(url -> log.info(url.toString()));
-    	});
-    }
-
-    
-    private static DecimalFormat format = new DecimalFormat("#,###");
-    private static String getMemoryInfo( ) {
-    	System.gc();
-        long freeMemory = Runtime.getRuntime().freeMemory()/1024;
-        long totalMemory = Runtime.getRuntime().totalMemory()/1024;
-
-        var result =  format.format(freeMemory) + " / " + format.format(totalMemory);
-        // log.info(result);
-        
-        return result;
-    }
     
     @Override
     protected void afterNavigation() {

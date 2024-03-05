@@ -1,7 +1,5 @@
 package de.anst.ui;
 
-import java.util.Arrays;
-
 import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.vaadin.flow.component.button.Button;

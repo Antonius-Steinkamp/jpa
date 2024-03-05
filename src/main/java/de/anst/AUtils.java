@@ -6,6 +6,8 @@ package de.anst;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -17,6 +19,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -164,4 +167,34 @@ public class AUtils {
     	return DATETIME_FORMATTER.format(LocalDateTimeofMillis(millis));
     }
     
+    public static Map<String, Object> getAllGetters(Object obj) {
+        Map<String, Object> result = new HashMap<>();
+
+        Class<?> clazz = obj.getClass();
+        Method[] methods = clazz.getMethods();
+
+        for (Method method : methods) {
+            if (isGetter(method)) {
+                try {
+                    String propertyName = getPropertyNameFromGetter(method.getName());
+                    Object value = method.invoke(obj);
+                    result.put(propertyName, value);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    log.info(e.getLocalizedMessage());
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private static boolean isGetter(Method method) {
+        return method.getName().startsWith("get") && method.getParameterCount() == 0
+                && !method.getReturnType().equals(void.class);
+    }
+
+    private static String getPropertyNameFromGetter(String methodName) {
+        // Beispiel: getUserName -> userName
+        return methodName.substring(3, 4).toLowerCase() + methodName.substring(4);
+    }
 }

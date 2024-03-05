@@ -5,8 +5,6 @@ package de.anst.about;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import com.vaadin.flow.component.grid.Grid;
@@ -19,14 +17,10 @@ import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import de.anst.AUtils;
 import de.anst.MainLayout;
-import de.anst.ui.ExtGridCrud;
-import lombok.extern.java.Log;
 
 @PageTitle("Ênv")
 @Route(value = "env", layout = MainLayout.class)
-@Log
 public class EnvView extends VerticalLayout {
 
 	/**

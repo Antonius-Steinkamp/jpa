@@ -4,6 +4,7 @@
 package de.anst.parameter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -91,6 +92,26 @@ public class Parameter  extends AbstractEntity{
 		public Parameter findByName(String name) {
 			return repository.findByName(name).get(0);
 		}
-	}
+
+		public Long getAndIncLong(String name) {
+			final List<Parameter> findByName = repository.findByName(name);
+			final Parameter parameter;
+			if (findByName == null || findByName.size() == 0) {
+				parameter = new Parameter();
+				parameter.setName(name);
+				parameter.setLongValue(1l);
+				
+			} else {
+				parameter = repository.findByName(name).get(0);
+			}
+			Long result =  parameter.getLongValue();
+			
+			parameter.setLongValue(result+1);
+			repository.save(parameter);
+			
+			return result;
+		}
+
+    }
 
 }

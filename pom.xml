@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- Project from https://start.vaadin.com/project/baae3ee2-9e45-40af-9d81-abc10530f381 -->
+
 	<groupId>de.anst</groupId>
 	<artifactId>jpa</artifactId>
+
 	<name>jpa</name>
 	<version>latest</version>
+
 	<packaging>jar</packaging>
 
 	<properties>
 		<java.version>17</java.version>
 		<vaadin.version>24.3.3</vaadin.version>
+
 		<jib.version>3.4.0</jib.version>
 		<base.image>eclipse-temurin:17-jre@sha256:bfb9eb9a4a3f29575c900085fce271932692e9bc653e06fc6cfa3a7df1f849d3</base.image>
 	
-<!-- 	
-		<base.image>eclipse-temurin:17-jre-alpine</base.image>
--->
 		<docker-hub.repo>registry.hub.docker.com/antonius</docker-hub.repo>
 	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.2.2</version>
+	</parent>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
 	<scm>
 		<url>https://github.com/Antonius-Steinkamp/jpa</url>
@@ -33,12 +47,6 @@
 			<organizationUrl>http://antonius.hopto.org/</organizationUrl>
 		</developer>
 	</developers>
-
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.2</version>
-	</parent>
 
 	<repositories>
 		<repository>
