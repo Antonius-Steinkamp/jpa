@@ -98,12 +98,12 @@ public class EnvView extends VerticalLayout {
 		
 		final ListDataProvider<NameValue> dataProvider = new ListDataProvider<>(items);
 		filterField.addValueChangeListener(e -> {
-			dataProvider.setFilter(item -> item.getName().contains(e.getValue()));	
-			log.info("Changed " + e.toString());
+			dataProvider.setFilter(item -> item.getName().contains(filterField.getValue()));	
+			dataProvider.addFilter(item -> item.getValue().contains(valueFilterField.getValue()));	
 		});
 		valueFilterField.addValueChangeListener(e -> {
-			dataProvider.setFilter(item -> item.getValue().contains(e.getValue()));	
-			log.info("Changed " + e.toString());
+			dataProvider.setFilter(item -> item.getValue().contains(valueFilterField.getValue()));	
+			dataProvider.addFilter(item -> item.getName().contains(filterField.getValue()));	
 		});
 		grid.setDataProvider(dataProvider);
 	}
