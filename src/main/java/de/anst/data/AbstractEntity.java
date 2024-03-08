@@ -35,14 +35,14 @@ public abstract class AbstractEntity {
         this.id = id;
     }
 
-    protected int getVersion() {
+    public int getVersion() {
         return version;
     }
 
-	@Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PROTECTED)
+	@Getter(value = AccessLevel.PUBLIC) @Setter(value = AccessLevel.PROTECTED)
     private LocalDateTime udate = LocalDateTime.now();; // last update Date
 
-	@Getter(value = AccessLevel.PROTECTED) @Setter(value = AccessLevel.PROTECTED)
+	@Getter(value = AccessLevel.PUBLIC) @Setter(value = AccessLevel.PROTECTED)
     private LocalDateTime cdate = LocalDateTime.now();// creation Date
 
 	@PreUpdate

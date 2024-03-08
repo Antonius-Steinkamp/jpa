@@ -23,8 +23,9 @@ import de.anst.parameter.ParameterView;
 import de.anst.person.PersonView;
 import de.anst.test.view.DetailsBasic;
 import de.anst.vpc.cc.ControlCycleView;
+import de.anst.vpc.fis.FisMessageView;
 import de.anst.vpc.material.MaterialView;
-import de.anst.vpc.material.einheit.EinheitView;
+import de.anst.vpc.material.einheit.Einheit;
 import de.anst.vpc.material.verpackung.VerpackungView;
 import de.anst.vpc.pearl.PearlView;
 import de.anst.vpc.pearl.stk.StkView;
@@ -86,9 +87,10 @@ public class MainLayout extends AppLayout {
         nav.addItem(new SideNavItem(nav.getTranslation("ControlCycle"), ControlCycleView.class, LineAwesomeIcon.FLUSHED.create()));
         nav.addItem(new SideNavItem(nav.getTranslation("Perlen"), PearlView.class, LineAwesomeIcon.FLUSHED.create()));
         nav.addItem(new SideNavItem(nav.getTranslation("Verbau"), StkView.class, LineAwesomeIcon.FLUSHED.create()));
+        nav.addItem(new SideNavItem(nav.getTranslation("FisMeldungen"), FisMessageView.class, LineAwesomeIcon.FLUSHED.create()));
 
         SideNavItem messagesLink = new SideNavItem(nav.getTranslation("Material"), MaterialView.class, LineAwesomeIcon.BOOK_SOLID.create());
-        messagesLink.addItem(new SideNavItem(nav.getTranslation("Einheit"), EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
+        messagesLink.addItem(new SideNavItem(nav.getTranslation("Einheit"), Einheit.EinheitView.class, LineAwesomeIcon.BOOK_SOLID.create()));
         messagesLink.addItem(new SideNavItem(nav.getTranslation("Verpackung"), VerpackungView.class, LineAwesomeIcon.BOOK_SOLID.create()));
         messagesLink.setExpanded(false);
         nav.addItem(messagesLink);

@@ -40,7 +40,7 @@ public class SegmentView extends VerticalLayout {
 
         crud.setCrudListener(new Segment.Persister(repository));
 
-        crud.getGrid().setColumns(Segment.Fields.name, Segment.Fields.description, Segment.Fields.taktZeit);
+        crud.getGrid().setColumns(Segment.Fields.name, Segment.Fields.description, Segment.Fields.taktZeit, Segment.Fields.maxPos);
 
         crud.getGrid().addSelectionListener(e -> {
         	e.getFirstSelectedItem().ifPresentOrElse(
@@ -55,7 +55,7 @@ public class SegmentView extends VerticalLayout {
         });
         
         mpChain.setColumns(Meldepunkt.Fields.name, Meldepunkt.Fields.description, Meldepunkt.Fields.taktzeit, Meldepunkt.Fields.eigenschaften);
-        pearlChain.setColumns(Pearl.Fields.name, Pearl.Fields.type);
+        pearlChain.setColumns(Pearl.Fields.name, Pearl.Fields.type, Pearl.Fields.pos);
         
 
         VerticalLayout childLayout = new VerticalLayout();

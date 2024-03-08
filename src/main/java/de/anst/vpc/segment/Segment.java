@@ -40,6 +40,15 @@ public class Segment extends AbstractEntity implements Comparable<Segment>{
 	@Getter @Setter
 	private Long taktZeit;
 	
+	public Segment(String name, String description, Long taktzeit) {
+		this.name = name;
+		this.description = description;
+		this.taktZeit = taktzeit;
+	}
+	
+	@Getter @Setter
+	private Long maxPos = 0l;
+	
 	
 	@Getter @Setter
 	@OneToMany(mappedBy = "segment", fetch = FetchType.EAGER)
@@ -88,10 +97,10 @@ public class Segment extends AbstractEntity implements Comparable<Segment>{
 			
 			log.info("**** " + this.getClass().getName() );
 			if (repository.count() == 0) {
-				repository.save(new Segment(KEIN_SEGMENT_NAME, "Wenn mal kein Segment benötigt wird", 0l, null, null));
+				repository.save(new Segment(KEIN_SEGMENT_NAME, "Wenn mal kein Segment benötigt wird", 0l));
 				
-				repository.save(new Segment(DEMO_SEGMENT_NAME, "Das Segment für die Demo", 140l, null, null));
-				repository.save(new Segment("mitte", "Der mittlere Abschnitt", 140l, null, null));
+				repository.save(new Segment(DEMO_SEGMENT_NAME, "Das Segment für die Demo", 140l));
+				repository.save(new Segment("mitte", "Der mittlere Abschnitt", 140l));
 			}
 			
 			KEIN_SEGMENT = repository.findByName(KEIN_SEGMENT_NAME).get(0);

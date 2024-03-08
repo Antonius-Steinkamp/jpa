@@ -52,6 +52,8 @@ public class Pearl  extends AbstractEntity implements Comparable<Pearl>{
 	@NotNull
     private Segment segment;
 
+	@Getter @Setter
+	private Long pos; // in Chain
 
 	@OneToMany(mappedBy = "pearl", fetch = FetchType.EAGER)
 	@Getter @Setter
@@ -67,7 +69,7 @@ public class Pearl  extends AbstractEntity implements Comparable<Pearl>{
 
 	@Override
 	public String toString() {
-		return name;
+		return name + "/" + segment.getName();
 	}
 
 	

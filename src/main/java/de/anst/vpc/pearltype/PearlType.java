@@ -4,6 +4,7 @@
 package de.anst.vpc.pearltype;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -90,6 +91,15 @@ public class PearlType  extends AbstractEntity implements Comparable<PearlType>{
 				type = new PearlType("Avant", "Der schicke Kombi"); repository.save(type);
 			}
 		}
+		
+		public List<PearlType> findByName(String name) {
+			return repository.findByName(name);
+		}
+		
+		public List<String> findNames() {
+			return repository.getTypeNames();
+		}
+		
 	}
 
 

@@ -1,7 +1,10 @@
 package de.anst.about;
 
+import java.sql.DriverManager;
 import java.text.DecimalFormat;
 import java.util.Locale;
+
+import org.springframework.beans.factory.annotation.Value;
 
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.UI;
@@ -67,12 +70,13 @@ public class AboutView extends VerticalLayout {
 		}
 
 		add(createHtml("Browserlocale: " + UI.getCurrent().getLocale() + " Systemlocale " + Locale.getDefault()));
-		add(createHtml("Java Version " + System.getProperty("java.version") + " " + System.getProperty("java.vm.name")
-				+ " " + System.getProperty("java.vm.version") + " " + System.getProperty("java.vm.vendor")));
-		add(createHtml("OS " + System.getProperty("os.name") + " " + System.getProperty("os.version") + " "
-				+ System.getProperty("os.arch")));
+		add(createHtml("Java Version " + System.getProperty("java.version") + " " + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + " " + System.getProperty("java.vm.vendor")));
+		add(createHtml("OS " + System.getProperty("os.name") + " " + System.getProperty("os.version") + " "	+ System.getProperty("os.arch")));
 		add(createHtml("Memory free: " + getMemoryInfo() + " MB Memory"));
 
+		
+		DriverManager.getDrivers().asIterator().forEachRemaining(driver -> log.info(driver.toString()));
+		
 		setSizeFull();
 		setJustifyContentMode(JustifyContentMode.CENTER);
 		setDefaultHorizontalComponentAlignment(Alignment.CENTER);

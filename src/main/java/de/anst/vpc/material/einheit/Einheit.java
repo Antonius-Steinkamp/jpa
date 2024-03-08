@@ -2,9 +2,15 @@ package de.anst.vpc.material.einheit;
 
 import org.springframework.stereotype.Component;
 
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
+
+import de.anst.MainLayout;
 import de.anst.data.AbstractEntity;
 import de.anst.data.JpaCrudService;
 import de.anst.ui.ExtComboBoxProvider;
+import de.anst.ui.ExtGridCrud;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -102,4 +108,21 @@ public class Einheit extends AbstractEntity implements Comparable<Einheit>{
 
 	}
 
+	@PageTitle("Einheit")
+	@Route(value = "einheit", layout = MainLayout.class)
+	public static class EinheitView extends VerticalLayout {
+		private static final long serialVersionUID = Einheit.EinheitView.class.hashCode();
+
+		final ExtGridCrud<Einheit> crud = new ExtGridCrud<Einheit>(Einheit.class);
+		
+	    public EinheitView(EinheitRepository repository) {
+	    	super();
+
+	        crud.setCrudListener(new Einheit.Persister(repository));
+
+	        addAndExpand(crud);
+	    }
+
+
+	}
 }

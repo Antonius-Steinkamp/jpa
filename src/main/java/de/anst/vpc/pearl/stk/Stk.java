@@ -3,6 +3,8 @@
  */
 package de.anst.vpc.pearl.stk;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Component;
 
 import de.anst.data.AbstractEntity;
@@ -47,7 +49,16 @@ public class Stk  extends AbstractEntity implements Comparable<Stk>{
 	@PositiveOrZero
 	@Getter @Setter
 	private Double menge;
+	
+	public Stk(Pearl pearl, ControlCycle cc, Double menge  ) {
+		this.pearl = pearl;
+		this.cc = cc;
+		this.menge = menge;
+	}
 
+	@Getter @Setter
+	private LocalDateTime verbauDatum; // an dem Zeitpunkt wurde es verbaut
+	
 	@Override
 	public int compareTo(Stk o) { // TODO
 		return 0;

@@ -4,18 +4,18 @@ import java.util.Collection;
 
 import org.vaadin.crudui.form.impl.field.provider.AbstractListingProvider;
 
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.data.renderer.ComponentRenderer;
 
 /**
  * @author Alejandro Duarte
  */
 public class ExtendableComboBoxProvider extends AbstractListingProvider<ComboBox<String>, String> {
+	private static final long serialVersionUID = ExtendableComboBoxProvider.class.hashCode();
 
     private ItemLabelGenerator<String> itemLabelGenerator;
-    private Collection<String> items;
+    @SuppressWarnings("hiding")
+	private Collection<String> items;
 
     public ExtendableComboBoxProvider(Collection<String> items) {
         super(items);
